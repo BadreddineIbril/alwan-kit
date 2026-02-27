@@ -1,11 +1,10 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import netlify from "@astrojs/netlify";
 
 export default defineConfig({
   output: "server",
-  devToolbar: {
-    enabled: false,
-  },
+
   experimental: {
     svgo: true,
     fonts: [
@@ -16,4 +15,6 @@ export default defineConfig({
       },
     ],
   },
+
+  adapter: netlify(),
 });
