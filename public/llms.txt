@@ -48,4 +48,4 @@ AlwanKit generates the following color roles:
 ## Links
 
 - Website: https://alwankit.com
-- GitHub: https://github.com/alwankit
+- GitHub: https://github.com/BadreddineIbril/alwan-kit

@@ -80,7 +80,7 @@ Visit **[alwankit.com](https://alwankit.com)**.
 Or clone and self-host:
 
 ```bash
-git clone https://github.com/BadreddineIbril/alwankit.git
+git clone https://github.com/BadreddineIbril/alwan-kit.git
 ```
 
 ## License
