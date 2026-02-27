@@ -1,0 +1,29 @@
+<footer ui-layout="footer">
+  <span class="content"
+    >©{new Date().getFullYear()} AlawnKit. Developed By
+    <a
+      ui-slot="link-button"
+      data-variant="black"
+      data-size="md"
+      data-underline="true"
+      href="https://x.com/badr_ibril"
+      target="_blank">
+      Badreddine Ibril
+    </a>
+  </span>
+</footer>
+
+<style>
+  [ui-layout="footer"] {
+    text-align: center;
+    color: var(--color-on-surface-variant);
+    background-color: var(--color-surface-container-lowest);
+    border-block-start: 1px solid var(--color-surface-variant);
+    padding: var(--spacing-24);
+    padding-block-end: calc(var(--spacing-48) * 2);
+
+    .content {
+      display: ruby;
+    }
+  }
+</style>

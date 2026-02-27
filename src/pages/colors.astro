@@ -1,0 +1,460 @@
+---
+import BaseLayout from "@/components/layouts/base-layout.astro";
+
+const COLORS = [
+  {
+    name: "Primary",
+    description:
+      "Use primary roles for the most prominent components across the UI, such as the FAB, high-emphasis buttons, and active states.",
+    list: [
+      { label: "Primary", bg: "primary", text: "on-primary" },
+      { label: "On Primary", bg: "on-primary", text: "primary" },
+      {
+        label: "Primary Container",
+        bg: "primary-container",
+        text: "on-primary-container",
+      },
+      {
+        label: "On Primary Container",
+        bg: "on-primary-container",
+        text: "primary-container",
+      },
+    ],
+  },
+  {
+    name: "Secondary",
+    description:
+      "Use secondary roles for less prominent components in the UI such as filter chips.",
+    list: [
+      { label: "Secondary", bg: "secondary", text: "on-secondary" },
+      { label: "On Secondary", bg: "on-secondary", text: "secondary" },
+      {
+        label: "Secondary Container",
+        bg: "secondary-container",
+        text: "on-secondary-container",
+      },
+      {
+        label: "On Secondary Container",
+        bg: "on-secondary-container",
+        text: "secondary-container",
+      },
+    ],
+  },
+  {
+    name: "Tertiary",
+    description:
+      "Use tertiary roles for contrasting accents that balance primary and secondary colors or bring heightened attention to an element such as an input field.",
+    list: [
+      { label: "Tertiary", bg: "tertiary", text: "on-tertiary" },
+      { label: "On Tertiary", bg: "on-tertiary", text: "tertiary" },
+      {
+        label: "Tertiary Container",
+        bg: "tertiary-container",
+        text: "on-tertiary-container",
+      },
+      {
+        label: "On Tertiary Container",
+        bg: "on-tertiary-container",
+        text: "tertiary-container",
+      },
+    ],
+  },
+  {
+    name: "Surface",
+    description:
+      "Text and icons typically use on surface and on surface variant on all types of surfaces.",
+    list: [
+      { label: "Surface", bg: "surface", text: "on-surface" },
+      { label: "On Surface", bg: "on-surface", text: "surface" },
+      {
+        label: "Surface Variant",
+        bg: "surface-variant",
+        text: "on-surface-variant",
+      },
+      {
+        label: "On Surface Variant",
+        bg: "on-surface-variant",
+        text: "surface-variant",
+      },
+    ],
+  },
+  {
+    name: "Surface Container",
+    description:
+      "Use surface roles for more neutral backgrounds, and container colors for components like cards, sheets, and dialogs.",
+    list: [
+      {
+        label: "Surface Container Lowest",
+        bg: "surface-container-lowest",
+        text: "on-surface-variant",
+      },
+      {
+        label: "Surface Container Low",
+        bg: "surface-container-low",
+        text: "on-surface-variant",
+      },
+      {
+        label: "Surface Container",
+        bg: "surface-container",
+        text: "on-surface-variant",
+      },
+      {
+        label: "Surface Container High",
+        bg: "surface-container-high",
+        text: "on-surface-variant",
+      },
+      {
+        label: "Surface Container Highest",
+        bg: "surface-container-highest",
+        text: "on-surface-variant",
+      },
+    ],
+  },
+  {
+    name: "Success",
+    description:
+      "Use success roles to communicate completed actions or positive feedback.",
+    list: [
+      { label: "Success", bg: "success", text: "on-success" },
+      { label: "On Success", bg: "on-success", text: "success" },
+      {
+        label: "Success Container",
+        bg: "success-container",
+        text: "on-success-container",
+      },
+      {
+        label: "On Success Container",
+        bg: "on-success-container",
+        text: "success-container",
+      },
+    ],
+  },
+  {
+    name: "Error",
+    description:
+      "Use error roles to communicate error states, such as an incorrect password entered into a text field.",
+    list: [
+      { label: "Error", bg: "error", text: "on-error" },
+      { label: "On Error", bg: "on-error", text: "error" },
+      {
+        label: "Error Container",
+        bg: "error-container",
+        text: "on-error-container",
+      },
+      {
+        label: "On Error Container",
+        bg: "on-error-container",
+        text: "error-container",
+      },
+    ],
+  },
+  {
+    name: "Info",
+    description:
+      "Use info roles to communicate neutral information or helpful context.",
+    list: [
+      { label: "Info", bg: "info", text: "on-info" },
+      { label: "On Info", bg: "on-info", text: "info" },
+      {
+        label: "Info Container",
+        bg: "info-container",
+        text: "on-info-container",
+      },
+      {
+        label: "On Info Container",
+        bg: "on-info-container",
+        text: "info-container",
+      },
+    ],
+  },
+  {
+    name: "Warning",
+    description: "Use warning roles to flag something that needs attention.",
+    list: [
+      { label: "Warning", bg: "warning", text: "on-warning" },
+      { label: "On Warning", bg: "on-warning", text: "warning" },
+      {
+        label: "Warning Container",
+        bg: "warning-container",
+        text: "on-warning-container",
+      },
+      {
+        label: "On Warning Container",
+        bg: "on-warning-container",
+        text: "warning-container",
+      },
+    ],
+  },
+];
+
+const GUIDES = [
+  {
+    role: "Primary, Secondary, Tertiary",
+    description:
+      "Your main color tokens, ordered by hierarchy. Primary is your brand, secondary and tertiary fill supporting roles.",
+  },
+  {
+    role: "Surface",
+    description:
+      "A role used for backgrounds and large, low-emphasis areas of the screen.",
+  },
+  {
+    role: "On",
+    description:
+      "Roles starting with this term indicate a color for text or icons on top of its paired parent color. For example, on primary is used for text and icons against the primary fill color.",
+  },
+  {
+    role: "Container",
+    description:
+      "Roles used as a fill color for foreground elements like buttons. They should not be used for text or icons.",
+  },
+  {
+    role: "Variant",
+    description:
+      "Roles ending with this term offer a lower emphasis alternative to its non-variant pair.",
+  },
+];
+
+const hue = Astro.url.searchParams.get("h");
+const saturation = Astro.url.searchParams.get("s");
+const lightness = Astro.url.searchParams.get("l");
+const harmony = Astro.url.searchParams.get("harmony");
+const name = Astro.url.searchParams.get("name");
+
+const hasColor = hue && saturation && lightness;
+---
+
+<BaseLayout
+  title="Colors"
+  description="Your full generated palette, every color role, every variant, accessible and ready to use.">
+  <main ui-page="colors">
+    <div class="head">
+      <a
+        href="/"
+        ui-slot="button"
+        data-variant="neutral"
+        data-mode="lighter"
+        data-size="md">
+        <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
+        Back to home
+      </a>
+      <h3 class="title">
+        Colors {
+          name && (
+            <div
+              ui-slot="status-badge"
+              data-variant="light"
+              data-status="disabled">
+              {name}
+            </div>
+          )
+        }
+      </h3>
+      <span></span>
+    </div>
+    <div
+      class="core"
+      data-color={hasColor}
+      data-theme="light"
+      data-harmony={harmony}
+      style={hasColor &&
+        `--base-hue: ${hue}; --base-saturation: ${saturation}%; --base-lightness: ${lightness}%;`}>
+      <div class="helper">
+        <div class="head">
+          <h3 class="title">General Concepts</h3>
+          <p class="description">
+            Here are helpful-to-know words you'll see in the names of color
+            roles:
+          </p>
+        </div>
+        <div ui-slot="accordion">
+          {
+            GUIDES.map((guide, i) => (
+              <div ui-slot="accordion-item">
+                <label ui-slot="accordion-trigger">
+                  <i class="hgi hgi-stroke hgi-idea-01" />
+                  {guide.role}
+                  <input type="checkbox" name="guide" checked={i === 0} />
+                </label>
+                <div ui-slot="accordion-content" role="region">
+                  <p>{guide.description}</p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      {
+        COLORS.map((type) => (
+          <div class="card">
+            <div class="head">
+              <h3 class="title">{type.name}</h3>
+              <p class="description">{type.description}</p>
+            </div>
+            <ul class="list">
+              {type.list.map((color) => (
+                <li>
+                  <button
+                    class="item"
+                    data-token
+                    style={`background-color: var(--color-${color.bg}); color: var(--color-${color.text});`}>
+                    <span class="label">{color.label}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { rgbToHsl } from "@/utils/helpers";
+
+  const tokens = document.querySelectorAll<HTMLButtonElement>("[data-token]");
+
+  tokens.forEach((token) =>
+    token.addEventListener("click", async () => {
+      const label = token.querySelector("span");
+
+      await navigator.clipboard.writeText(
+        rgbToHsl(getComputedStyle(token).backgroundColor),
+      );
+
+      if (!label) return;
+
+      token.disabled = true;
+      const name = label.textContent;
+      label.textContent = "Copied!";
+
+      setTimeout(() => {
+        token.disabled = false;
+        label.textContent = name;
+      }, 2000);
+    }),
+  );
+</script>
+
+<style>
+  [ui-page="colors"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-48);
+
+    & > .head {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+
+      .title {
+        font: var(--font-headline-lg);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-8);
+      }
+    }
+
+    .core {
+      display: grid;
+      gap: var(--spacing-32);
+
+      .head {
+        display: grid;
+        gap: var(--spacing-8);
+
+        .title {
+          font: var(--font-title-lg);
+        }
+
+        .description {
+          color: var(--color-on-surface-variant);
+        }
+      }
+
+      .helper {
+        display: grid;
+        gap: var(--spacing-24);
+
+        [ui-slot="accordion"] {
+          display: grid;
+          align-items: flex-start;
+          grid-template-columns: repeat(2, 1fr);
+
+          [ui-slot="accordion-item"] {
+            &:first-child {
+              grid-column: 1 / 3;
+            }
+
+            [ui-slot="accordion-trigger"] {
+              font: var(--font-body-md);
+            }
+          }
+        }
+      }
+
+      .card {
+        display: grid;
+        gap: var(--spacing-24);
+
+        .list {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          overflow: hidden;
+          box-shadow: var(--shadow-lg);
+          border-radius: var(--radius-rounded);
+
+          .item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: var(--spacing-24);
+
+            &:disabled {
+              pointer-events: none;
+            }
+          }
+        }
+
+        &:nth-child(6) {
+          .list {
+            grid-template-columns: repeat(5, 1fr);
+          }
+        }
+      }
+    }
+
+    @media (max-width: 769px) {
+      & > .head {
+        display: flex !important;
+        flex-direction: column-reverse;
+        gap: var(--spacing-12);
+      }
+
+      .core {
+        .helper {
+          [ui-slot="accordion"] {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+
+        .card {
+          .list {
+            display: flex;
+            flex-direction: column;
+            border-radius: var(--radius-lg);
+
+            .item {
+              padding: var(--spacing-16);
+            }
+          }
+        }
+      }
+    }
+  }
+</style>

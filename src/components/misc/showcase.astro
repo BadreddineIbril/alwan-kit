@@ -1,0 +1,229 @@
+---
+import Character1 from "@/assets/icons/shape-1.svg";
+import Character2 from "@/assets/icons/shape-2.svg";
+import Character3 from "@/assets/icons/shape-3.svg";
+import Character4 from "@/assets/icons/shape-4.svg";
+---
+
+<section ui-section="showcase">
+  <div class="card">
+    <div class="browser">
+      <div class="nav">
+        <div class="dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <div class="preview">
+        <div ui-slot="skeleton" data-radius="circled" aria-label="loading...">
+        </div>
+        <div class="lines">
+          <div ui-slot="skeleton" data-radius="rounded" aria-label="loading...">
+          </div>
+          <div ui-slot="skeleton" data-radius="rounded" aria-label="loading...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="value">
+      <span class="color"></span>
+      hsl(154, 50% 30%)
+    </div>
+    <div class="value">
+      <span class="color"></span>
+      var(--color-primary)
+    </div>
+    <button
+      ui-slot="button"
+      data-variant="primary"
+      data-mode="filled"
+      data-size="lg">
+      Primary Button
+    </button>
+  </div>
+  <div class="card">
+    <div class="type"><Character1 /> Monochromatic</div>
+    <div class="type"><Character2 /> Complementary</div>
+    <div class="type"><Character3 /> Triadic</div>
+    <div class="type"><Character4 /> Analogous</div>
+  </div>
+</section>
+
+<style>
+  [ui-section="showcase"] {
+    display: grid;
+    align-items: flex-end;
+    grid-template-columns: 30% 40% 30%;
+
+    .card {
+      padding: var(--spacing-24);
+      border-radius: var(--radius-lg);
+      margin-inline: -16px;
+
+      &:first-child {
+        height: 120%;
+        padding-block-end: var(--spacing-0);
+        background-color: var(--color-secondary-container);
+
+        .browser {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+          background-color: var(--color-surface-container-lowest);
+
+          .nav {
+            padding: var(--spacing-16);
+            border-block-end: 1px solid var(--color-surface-variant);
+
+            .dots {
+              display: flex;
+              gap: var(--spacing-4);
+
+              .dot {
+                clip-path: circle();
+                width: var(--spacing-10);
+                height: var(--spacing-10);
+                background-color: var(--color-secondary);
+
+                &:nth-child(2) {
+                  opacity: 0.6;
+                }
+
+                &:last-child {
+                  opacity: 0.3;
+                }
+              }
+            }
+          }
+
+          .preview {
+            flex: 2;
+            padding: var(--spacing-16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-16);
+            position: relative;
+
+            .lines {
+              display: grid;
+              gap: var(--spacing-8);
+              flex: 2;
+
+              [ui-slot="skeleton"] {
+                width: 100%;
+                height: var(--spacing-16);
+
+                &:last-child {
+                  width: 70%;
+                }
+              }
+            }
+
+            & > [ui-slot="skeleton"] {
+              &:first-child {
+                width: var(--spacing-48);
+                height: var(--spacing-48);
+              }
+            }
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--spacing-48);
+        background-color: var(--color-primary-container);
+
+        .value {
+          border-radius: var(--radius-rounded);
+          padding: var(--spacing-4) var(--spacing-8);
+          color: var(--color-primary);
+          background-color: var(--color-surface-container-lowest);
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-6);
+          position: relative;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 1.5px;
+            height: var(--spacing-48);
+            left: 50%;
+            inset-block-start: 100%;
+            transform: translateX(-50%) rotate(15deg);
+            background-color: var(--color-surface-container-lowest);
+          }
+
+          .color {
+            width: 12px;
+            height: 12px;
+            clip-path: circle();
+            margin-inline: -2px;
+            background-color: var(--color-primary);
+          }
+
+          &:nth-child(2)::before {
+            transform: translateX(-50%) rotate(-15deg);
+          }
+        }
+      }
+
+      &:last-child {
+        background-color: var(--color-tertiary-container);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-24);
+        height: 80%;
+
+        .type {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-8);
+          padding: var(--spacing-8) var(--spacing-12);
+          border-radius: var(--radius-rounded);
+          background-color: var(--color-surface-container-lowest);
+
+          & > svg {
+            width: var(--spacing-24);
+            height: var(--spacing-1246);
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
+      display: flex;
+      align-items: normal;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      overflow: scroll hidden;
+      scroll-snap-type: x mandatory;
+
+      .card {
+        height: auto !important;
+        margin-inline: var(--spacing-0);
+        min-width: 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+
+        &:first-child {
+          order: 99;
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+# AlwanKit
+
+> One color. A whole system. Pick a color, choose a harmony, and get a complete, WCAG-accessible color palette for your app or design system. Covering every role, every state, and every mode, in pure CSS with no JavaScript required.
+
+AlwanKit is a free, open source color system generator built entirely on CSS custom properties. It takes a single base color and a harmony mode as input and outputs a full, production-ready design system palette. Primary, secondary, tertiary, surface variants, semantic colors, dark mode included, all accessible by default and exportable in multiple formats.
+
+## Key Features
+
+- **Harmony**: Supports complementary, triadic, analogous, and monochromatic harmony modes
+- **WCAG accessible**: Every generated color automatically meets WCAG contrast standards, no manual checking required
+- **Dark mode**: Light and dark themes are generated together from the same base color
+- **Pure CSS**: Built entirely on CSS custom properties. No JavaScript, no runtime overhead, no layout shift
+- **Export formats**: CSS custom properties, SCSS variables, Tailwind config, JSON
+- **Open source**: Free to use, fork, and ship in personal and commercial projects
+
+## Color Roles
+
+AlwanKit generates the following color roles:
+
+- **Primary / Secondary / Tertiary**: Main accent colors ordered by hierarchy, with container and on-color variants for each
+- **Surface**: Background and layout colors with five levels of elevation (lowest, low, default, high, highest) plus a variant
+- **Semantic**: Success, error, warning, and info. Each with container and on-color variants
+- **On [color]**: Foreground (text/icon) tokens always paired with their background counterpart
+
+## Pages
+
+- **Home**: Overview, features, how it works, FAQ, and CTA
+- **Colors**: Full generated palette listed with role names, values, and short descriptions
+- **Examples**: UI components and blocks built using the generated palette (buttons, forms, cards, alerts, and more)
+- **Explore**: A curated collection of ready-to-use palettes from popular brands
+- **Export**: Code output with format switcher (CSS, SCSS, Tailwind, JSON) and copy/download actions
+
+## How It Works
+
+1. Pick a base color and harmony mode using the FAB color picker
+2. AlwanKit derives the full palette using color theory and auto-adapts each color for WCAG compliance
+3. Light and dark themes are generated simultaneously from the same base
+4. Export the result in your preferred format and drop it into your project
+
+## Technical Details
+
+- Built entirely on CSS custom properties and the cascade, zero JavaScript
+- Uses `hsl()` color model with clamped lightness and saturation for accessible output
+- Dark mode handled via `[data-theme="dark"]` attribute on the root element
+- Harmony offsets applied via `[data-harmony]` attribute
+- Source code is self-contained and can be self-hosted
+
+## Links
+
+- Website: https://alwankit.com
+- GitHub: https://github.com/alwankit

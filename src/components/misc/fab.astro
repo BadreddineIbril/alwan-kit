@@ -1,0 +1,157 @@
+<div ui-misc="fab">
+  <input type="color" name="base-color" value="#16709C" ui-fab="color" />
+  <select
+    name="harmony"
+    ui-slot="button"
+    data-variant="neutral"
+    data-mode="stroke"
+    data-size="md"
+    ui-fab="harmony">
+    <option value="monochromatic">Monochromatic</option>
+    <option value="complementary">Complementary</option>
+    <option value="triadic">Triadic</option>
+    <option value="analogous">Analogous</option>
+  </select>
+  <div ui-slot="button-group" data-size="sm" role="group">
+    <a href="/colors" ui-slot="button-group-item">
+      <i class="hgi hgi-stroke hgi-view"></i>
+      <span>Colors</span>
+    </a>
+    <a href="/examples" ui-slot="button-group-item">
+      <i class="hgi hgi-stroke hgi-puzzle"></i>
+      <span>Examples</span>
+    </a>
+    <a href="/export" ui-slot="button-group-item">
+      <i class="hgi hgi-stroke hgi-file-export"></i>
+      <span>Export</span>
+    </a>
+  </div>
+  <label class="switch">
+    <input ui-slot="switch" type="checkbox" name="dark" ui-fab="dark" />
+    Dark mode
+  </label>
+</div>
+
+<script is:inline>
+  const root = document.documentElement;
+  const fab = document.querySelector('[ui-misc="fab"]');
+  const [color, harmony, dark] = fab.querySelectorAll("[ui-fab]");
+
+  const theme = getTheme(localStorage.getItem("theme"));
+  const brand = localStorage.getItem("brand") || "#4a9fd3";
+  const vibe = localStorage.getItem("harmony") || "complementary";
+
+  setBrand(brand);
+  setTheme(theme);
+  setVibe(vibe);
+  harmony.value = vibe;
+
+  dark.checked = theme === "dark";
+  dark.addEventListener("change", () =>
+    setTheme(dark.checked ? "dark" : "light"),
+  );
+
+  color.addEventListener("input", (e) => setBrand(e.target.value));
+
+  harmony.addEventListener("change", (e) => setVibe(e.target.value));
+
+  function getTheme(value) {
+    return value === "dark" || value === "light"
+      ? value
+      : matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+  }
+
+  function setTheme(theme) {
+    document
+      .querySelectorAll("[data-theme]")
+      .forEach((item) => item.setAttribute("data-theme", getTheme(theme)));
+    localStorage.setItem("theme", getTheme(theme));
+  }
+
+  function setVibe(vibe) {
+    root.setAttribute("data-harmony", vibe);
+    localStorage.setItem("harmony", vibe);
+  }
+
+  function setBrand(brand) {
+    color.value = brand;
+    localStorage.setItem("brand", brand);
+
+    const { h, s, l } = hexToHSL(brand);
+    document.documentElement.style.setProperty("--base-hue", h);
+    document.documentElement.style.setProperty("--base-saturation", `${s}%`);
+    document.documentElement.style.setProperty("--base-lightness", `${l}%`);
+  }
+
+  function hexToHSL(hex) {
+    let [r, g, b] = [1, 3, 5].map(
+      (i) => parseInt(hex.slice(i, i + 2), 16) / 255,
+    );
+    const max = Math.max(r, g, b),
+      min = Math.min(r, g, b);
+    const l = (max + min) / 2;
+    if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) };
+
+    const d = max - min;
+    const s = d / (1 - Math.abs(2 * l - 1));
+    const h =
+      {
+        [r]: (g - b) / d + (g < b ? 6 : 0),
+        [g]: (b - r) / d + 2,
+        [b]: (r - g) / d + 4,
+      }[max] * 60;
+
+    return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
+  }
+</script>
+
+<style>
+  [ui-misc="fab"] {
+    width: fit-content;
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-rounded);
+    background-color: var(--color-surface-container-lowest);
+    z-index: 50;
+    position: fixed;
+    left: 50%;
+    inset-block-end: var(--spacing-24);
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-12);
+
+    input[type="color"] {
+      cursor: pointer;
+      clip-path: circle();
+      width: calc(var(--spacing-32) + var(--spacing-4));
+      height: calc(var(--spacing-32) + var(--spacing-4));
+
+      &::-webkit-color-swatch-wrapper {
+        padding: 0;
+      }
+
+      &::-webkit-color-swatch {
+        border: none;
+        outline: none;
+      }
+    }
+
+    .switch {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-8);
+      width: max-content;
+    }
+
+    @media (max-width: 769px) {
+      [ui-slot="button-group"] {
+        display: none;
+      }
+    }
+  }
+</style>

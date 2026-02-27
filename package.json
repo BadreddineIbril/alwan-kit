@@ -1,0 +1,32 @@
+{
+  "name": "AlwanKit",
+  "description": "AlwanKit is a free, open source color system generator built entirely on CSS custom properties.",
+  "type": "module",
+  "version": "1.0.0",
+  "author": {
+    "name": "badreddine ibril",
+    "url": "https://x.com/badr_ibril"
+  },
+  "keywords": [
+    "AlwanKit",
+    "color system",
+    "accessible colors",
+    "WCAG colors",
+    "pure CSS",
+    "no JavaScript",
+    "open source",
+    "harmony",
+    "free color tool",
+    "dark mode colors",
+    "CSS color palette generator"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.17.1"
+  }
+}

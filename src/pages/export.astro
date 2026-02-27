@@ -1,0 +1,71 @@
+---
+import BaseLayout from "@/components/layouts/base-layout.astro";
+import CodeSource from "@/components/misc/code-source.astro";
+
+const name = Astro.url.searchParams.get("name");
+---
+
+<BaseLayout
+  title="Export"
+  description="Grab your color system in CSS, SCSS, Tailwind, or JSON.">
+  <main ui-page="export">
+    <div class="head">
+      <a
+        href="/"
+        ui-slot="button"
+        data-variant="neutral"
+        data-mode="lighter"
+        data-size="md">
+        <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
+        Back to home
+      </a>
+      <h3 class="title">
+        Export {
+          name && (
+            <div
+              ui-slot="status-badge"
+              data-variant="light"
+              data-status="disabled">
+              {name}
+            </div>
+          )
+        }
+      </h3>
+      <span></span>
+    </div>
+    <div class="core">
+      <CodeSource />
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  [ui-page="export"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-48);
+
+    & > .head {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+
+      .title {
+        font: var(--font-headline-lg);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-8);
+      }
+    }
+
+    @media (max-width: 769px) {
+      & > .head {
+        display: flex !important;
+        flex-direction: column-reverse;
+        gap: var(--spacing-12);
+      }
+    }
+  }
+</style>

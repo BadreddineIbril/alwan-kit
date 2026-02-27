@@ -1,0 +1,213 @@
+---
+import { FORMATS } from "@/utils/constants";
+
+const hue = Astro.url.searchParams.get("h");
+const saturation = Astro.url.searchParams.get("s");
+const lightness = Astro.url.searchParams.get("l");
+const harmony = Astro.url.searchParams.get("harmony");
+const format = Astro.url.searchParams.get("format") || "css";
+
+const hasColor = hue && saturation && lightness;
+---
+
+<div ui-misc="component-source">
+  <div class="head">
+    <div class="types">
+      <i class="hgi hgi-stroke hgi-file-02"></i>
+      <div ui-slot="segmented-control" role="tablist">
+        {
+          FORMATS.map((item) => (
+            <label ui-slot="segmented-control-trigger" role="tab">
+              {item.label}
+              <input
+                type="radio"
+                name="export"
+                value={item.value}
+                checked={item.value === format}
+              />
+            </label>
+          ))
+        }
+      </div>
+    </div>
+    <div ui-slot="button-group" data-size="xs" role="group">
+      <button ui-slot="button-group-item" data-copy>
+        <i class="hgi hgi-stroke hgi-copy-01"></i>
+        <span>Copy</span>
+      </button>
+      <button ui-slot="button-group-item" data-download>
+        <i class="hgi hgi-stroke hgi-download-02"></i> Download
+      </button>
+    </div>
+  </div>
+  <div
+    class="core"
+    data-color={hasColor}
+    data-theme="light"
+    data-harmony={harmony}
+    style={hasColor &&
+      `--base-hue: ${hue}; --base-saturation: ${saturation}%; --base-lightness: ${lightness}%;`}>
+    <pre data-code></pre>
+  </div>
+</div>
+
+<script>
+  import {
+    exportRawColors,
+    exportHighlightedColors,
+    exportSourceCode,
+  } from "@/utils/export";
+  import { download } from "@/utils/helpers";
+
+  const code = document.querySelector("[data-code]");
+  const copy = document.querySelector<HTMLButtonElement>("[data-copy]");
+  const save = document.querySelector<HTMLButtonElement>("[data-download]");
+  const formats =
+    document.querySelectorAll<HTMLInputElement>('[name="export"]');
+
+  let selectedFormat: "css" | "scss" | "json" | "tailwind" | "dynamic" =
+    ([...formats].find((format) => format.checked)?.value as
+      | "css"
+      | "scss"
+      | "json"
+      | "tailwind"
+      | "dynamic") || "css";
+
+  setCode();
+
+  copy?.addEventListener("click", async () => {
+    await navigator.clipboard.writeText(
+      selectedFormat === "dynamic"
+        ? exportSourceCode()
+        : exportRawColors()[selectedFormat],
+    );
+
+    const icon = copy.querySelector("i");
+    const label = copy.querySelector("span");
+    if (!icon || !label) return;
+
+    copy.disabled = true;
+    icon.className = "hgi hgi-stroke hgi-tick-02";
+    label.textContent = "Copied";
+
+    setTimeout(() => {
+      icon.className = "hgi hgi-stroke hgi-copy-01";
+      label.textContent = "Copy";
+      copy.disabled = false;
+    }, 2000);
+  });
+
+  save?.addEventListener("click", () => {
+    const filenames = {
+      css: "variables.css",
+      scss: "colors.scss",
+      json: "tokens.css",
+      tailwind: "tailwind.config.ts",
+      dynamic: "colors-generator.css",
+    };
+    download(
+      filenames[selectedFormat],
+      selectedFormat === "dynamic"
+        ? exportSourceCode()
+        : exportRawColors()[selectedFormat],
+    );
+  });
+
+  formats.forEach((format) => {
+    format.addEventListener("change", (e) => {
+      selectedFormat = e?.target?.value || "css";
+      setCode();
+    });
+  });
+
+  function setCode() {
+    if (code) {
+      code.innerHTML =
+        selectedFormat === "dynamic"
+          ? exportSourceCode()
+          : exportHighlightedColors()[selectedFormat];
+    }
+  }
+</script>
+
+<style>
+  [ui-misc="component-source"] {
+    display: grid;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-surface-variant);
+
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-16);
+      border-block-end: 1px solid var(--color-surface-variant);
+
+      .types {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-8);
+        color: var(--color-on-surface-variant);
+
+        & > i {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .core {
+      min-width: 100%;
+
+      pre {
+        height: 60vh;
+        max-height: 60vh;
+        overflow: auto;
+        padding: var(--spacing-16);
+        color: var(--color-warning);
+        background-color: var(--color-surface-container-lowest) !important;
+
+        [data-highlight="key"] {
+          color: var(--color-primary);
+        }
+
+        [data-highlight="value"] {
+          color: var(--color-success);
+        }
+
+        [data-highlight="character"] {
+          color: var(--color-on-surface);
+        }
+      }
+    }
+
+    @media (max-width: 769px) {
+      .head {
+        display: grid;
+        gap: var(--spacing-16);
+        grid-template-columns: 1fr;
+
+        .types {
+          & > i {
+            display: none;
+          }
+
+          [ui-slot="segmented-control"] {
+            width: 100%;
+            flex-direction: column;
+            border-radius: var(--radius-lg);
+          }
+        }
+
+        [ui-slot="button-group"] {
+          width: 100%;
+
+          [ui-slot="button-group-item"] {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+</style>

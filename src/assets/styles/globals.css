@@ -1,0 +1,152 @@
+@layer reset, base, components, utilities;
+
+@import url("./_base/colors.css") layer(base.colors);
+@import url("./_base/tokens.css") layer(base.tokens);
+
+@import url("./components/button.css");
+@import url("./components/link-button.css");
+@import url("./components/button-group.css");
+@import url("./components/switch.css");
+@import url("./components/separator.css");
+@import url("./components/segmented-control.css");
+@import url("./components/status-badge.css");
+@import url("./components/accordion.css");
+@import url("./components/skeleton.css");
+
+@layer reset {
+  * {
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--spacing-48);
+    min-height: 100vh;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font: var(--font-body-md);
+
+    & > main {
+      flex: 2;
+      margin-inline: 8%;
+      padding: var(--spacing-48);
+      border-block-start: 1px solid var(--color-surface-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-48);
+
+      &::after,
+      &::before {
+        content: "";
+        width: 1px;
+        height: 100%;
+        position: fixed;
+        inset-block-start: 0;
+        background-color: var(--color-surface-variant);
+      }
+
+      &::before {
+        inset-inline-start: 8%;
+      }
+
+      &::after {
+        inset-inline-end: 8%;
+      }
+
+      & > [ui-slot="separator"] {
+        width: calc(100% + var(--spacing-48) * 2) !important;
+        margin-inline-start: calc(var(--spacing-48) * -1);
+      }
+
+      @media (max-width: 769px) {
+        margin-inline: var(--spacing-24);
+        padding-inline: var(--spacing-24);
+
+        &::before {
+          inset-inline-start: var(--spacing-24);
+        }
+
+        &::after {
+          inset-inline-end: var(--spacing-24);
+        }
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    width: fit-content;
+    text-decoration: none;
+  }
+
+  button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input {
+    border: none;
+    outline: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  p {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-container);
+  }
+}
+
+@layer utilities {
+  [ui-slot="sr"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border-width: 0;
+    white-space: nowrap;
+  }
+
+  [data-theme="dark"],
+  :has([name="dark"]:checked) {
+    .astro-code,
+    .astro-code span {
+      color: var(--shiki-dark) !important;
+    }
+  }
+}

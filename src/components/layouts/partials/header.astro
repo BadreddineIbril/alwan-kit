@@ -1,0 +1,244 @@
+---
+import Logo from "@/assets/icons/shape-1.svg";
+
+const LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Explore", href: "/explore" },
+  { label: "Colors", href: "/colors" },
+  { label: "Examples", href: "/examples" },
+  { label: "Export", href: "/export" },
+  { label: "Tools", href: "/tools" },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header ui-layout="header">
+  <div class="wrapper" data-state="closed">
+    <nav class="main">
+      <a href="/" class="logo">
+        <Logo /> AlwanKit
+      </a>
+      <div class="menu">
+        <button
+          ui-slot="button"
+          data-variant="neutral"
+          data-mode="ghost"
+          data-size="md"
+          data-as-icon
+          aria-label="Menu"
+          name="toggle">
+          <i class="hgi hgi-stroke hgi-menu-09"></i>
+        </button>
+      </div>
+      <div class="cta">
+        <a
+          href="/export"
+          ui-slot="button"
+          data-variant="neutral"
+          data-mode="filled"
+          data-size="md">
+          Export
+        </a>
+      </div>
+    </nav>
+    <div class="more">
+      <ul class="portal-links">
+        {
+          LINKS.map((link) => (
+            <li class="link">
+              <a href={link.href} aria-current={link.href === pathname}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="socials">
+        <ol class="links">
+          {
+            [
+              {
+                label: "Github",
+                icon: "github",
+                url: "https://github.com/BadreddineIbril",
+              },
+              {
+                label: "X",
+                icon: "new-twitter",
+                url: "https://x.com/badr_ibril",
+              },
+              {
+                label: "Support",
+                icon: "coffee-01",
+                url: "https://ko-fi.com/bibril",
+              },
+            ].map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                class="link"
+                ui-slot="button"
+                data-variant="neutral"
+                data-mode="ghost"
+                data-size="xs"
+                data-as-icon
+                aria-label={social.label}>
+                <i class={`hgi hgi-stroke hgi-${social.icon}`} />
+              </a>
+            ))
+          }
+        </ol>
+        <span class="copyright">© {new Date().getFullYear()} AlwanKit</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  const header = document.querySelector('[ui-layout="header"]');
+  const wrapper = header?.firstElementChild;
+
+  wrapper
+    ?.querySelector('[name="toggle"]')
+    .addEventListener("click", () => setState());
+
+  wrapper?.addEventListener(
+    "keydown",
+    (e) => e.key === "Escape" && setState("closed"),
+  );
+
+  function setState(state) {
+    if (state === "closed" && wrapper.dataset.state === "closed") {
+      return;
+    }
+
+    wrapper?.setAttribute(
+      "data-state",
+      state || wrapper.dataset.state === "open" ? "closed" : "open",
+    );
+  }
+</script>
+
+<style>
+  [ui-layout="header"] {
+    z-index: 50;
+    position: sticky;
+    inset-block-start: var(--spacing-24);
+    margin-inline: var(--spacing-24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .wrapper {
+      width: 380px;
+      overflow: hidden;
+      background-color: var(--color-surface-container-lowest);
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition-expressive-default-spatial);
+
+      &[data-state="closed"] {
+        height: 52px;
+        padding: var(--spacing-8);
+        border-radius: var(--radius-xl);
+      }
+
+      &[data-state="open"] {
+        height: 346px;
+        padding: var(--spacing-12);
+        border-radius: var(--radius-lg);
+      }
+
+      .main {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr auto 1fr;
+        gap: var(--spacing-12);
+
+        .logo {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-6);
+          font: var(--font-title-md);
+          color: var(--color-primary);
+
+          & > svg {
+            width: var(--spacing-24);
+            height: var(--spacing-24);
+          }
+        }
+
+        .menu {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-4);
+
+          &::after,
+          &::before {
+            content: "";
+            display: flex;
+            width: 1px;
+            height: var(--spacing-16);
+            border-radius: var(--radius-rounded);
+            background-color: var(--color-surface-variant);
+          }
+        }
+
+        .cta {
+          display: flex;
+          justify-content: flex-end;
+
+          [ui-slot="button"] {
+            width: 100px;
+          }
+        }
+      }
+
+      .more {
+        display: grid;
+        gap: var(--spacing-12);
+
+        .portal-links {
+          display: grid;
+
+          .link {
+            font: var(--font-title-md);
+            border-block-end: 1px dashed var(--color-surface-variant);
+
+            & > a {
+              width: 100%;
+              display: flex;
+              padding-block: var(--spacing-8);
+
+              &:hover,
+              &[aria-current="true"] {
+                color: var(--color-primary);
+              }
+            }
+          }
+        }
+
+        .socials {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .links {
+            display: flex;
+          }
+
+          .copyright {
+            font: var(--font-body-sm);
+            color: var(--color-on-surface-variant);
+          }
+        }
+      }
+
+      @media (max-width: 769px) {
+        width: 100%;
+      }
+    }
+  }
+</style>

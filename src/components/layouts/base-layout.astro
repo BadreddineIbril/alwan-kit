@@ -1,0 +1,91 @@
+---
+import "@/assets/styles/globals.css";
+import { Font } from "astro:assets";
+import Header from "./partials/header.astro";
+import Footer from "./partials/footer.astro";
+import Fab from "@/components/misc/fab.astro";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="light" data-harmony="monochromatic">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{(title ? `${title} | ` : "") + "AlwanKit"}</title>
+    <meta name="description" content={description} />
+
+    <link rel="author" href="https://bibril.com" />
+    <meta name="author" content="Badreddine Ibril" />
+    <meta name="creator" content="Badreddine Ibril" />
+    <meta
+      name="description"
+      content="Pick a color, choose a harmony, and get a complete, WCAG accessible color palette for your app or design system."
+    />
+    <meta
+      name="keywords"
+      content="AlwanKit, color system, accessible colors, WCAG colors, pure CSS, no JavaScript, open source, free color tool, dark mode colors, CSS color palette generator"
+    />
+
+    <meta property="og:title" content="One color. A whole system | AlwanKit" />
+    <meta
+      property="og:description"
+      content="Pick a color, choose a harmony, and get a complete, WCAG accessible color palette for your app or design system."
+    />
+    <meta
+      property="og:image"
+      content="https://res.cloudinary.com/db5lnd1t6/image/upload/v1772159347/alwan-og_m3zpef.png"
+    />
+    <meta property="og:url" content="https://www.alwankit.com" />
+    <meta property="og:type" content="website" />
+
+    <meta property="og:url" content="https://alwankit.com" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="Pick a color, choose a harmony, and get a complete, WCAG accessible color palette for your app or design system."
+    />
+    <meta
+      property="og:image"
+      content="https://res.cloudinary.com/db5lnd1t6/image/upload/v1772159347/alwan-og_m3zpef.png"
+    />
+
+    <meta name="twitter:title" content="One color. A whole system | AlwanKit" />
+    <meta
+      name="twitter:description"
+      content="Pick a color, choose a harmony, and get a complete, WCAG accessible color palette for your app or design system."
+    />
+    <meta
+      name="twitter:image"
+      content="https://res.cloudinary.com/db5lnd1t6/image/upload/v1772159347/alwan-og_m3zpef.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="alwankit.com" />
+    <meta property="twitter:url" content="https://alwankit.com" />
+
+    <link rel="preconnect" href="https://cdn.hugeicons.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.hugeicons.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css"
+    />
+
+    <Font cssVariable="--font-dm-sans" preload />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Fab />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/components/layouts/base-layout.astro";
+import Hero from "@/components/misc/hero.astro";
+import WhyUs from "@/components/misc/why-us.astro";
+import HowItWorks from "@/components/misc/how-it-works.astro";
+import Export from "@/components/misc/export.astro";
+import Showcase from "@/components/misc/showcase.astro";
+import Faq from "@/components/misc/faq.astro";
+import Cta from "@/components/misc/cta.astro";
+---
+
+<BaseLayout title="One color, a whole system" description="Don't want to use any of this?">
+  <main ui-page="home">
+    <Hero />
+    <Showcase />
+    <hr ui-slot="separator" data-variant="line" />
+    <WhyUs />
+    <hr ui-slot="separator" data-variant="line" />
+    <HowItWorks />
+    <hr ui-slot="separator" data-variant="line" />
+    <Export />
+    <hr ui-slot="separator" data-variant="line" />
+    <Faq />
+    <hr ui-slot="separator" data-variant="line" />
+    <Cta />
+  </main>
+</BaseLayout>

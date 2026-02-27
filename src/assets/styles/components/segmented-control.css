@@ -1,0 +1,78 @@
+/* 
+  Component: Segmented Control
+
+  Usage:
+    - <div ui-slot="segmented-control" role="tablist">
+        <label ui-slot="segmented-control-trigger" role="tab">
+          Light <input type="radio" name="theme" value="light" checked />
+        </label>
+        <label ui-slot="segmented-control-trigger" role="tab">
+          Dark <input type="radio" name="theme" value="dark" />
+        </label>
+        <label ui-slot="segmented-control-trigger" role="tab">
+          System <input type="radio" name="theme" value="system" />
+        </label>
+      </div>
+*/
+
+[ui-slot="segmented-control"] {
+  --segmented-control-gap: 0px;
+
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-rounded);
+  background-color: var(--color-surface-container);
+
+  /* Indicator */
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    bottom: anchor(bottom);
+    left: anchor(left);
+    width: anchor-size(width);
+    height: anchor-size(height);
+    transition: var(--transition-expressive-default-spatial);
+    border-radius: var(--radius-rounded);
+    background-color: var(--color-surface-container-lowest);
+    position-anchor: --active;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Item */
+  [ui-slot="segmented-control-trigger"] {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 28px;
+    padding-inline: var(--spacing-16);
+    transition: color var(--transition-standard-default-spatial);
+    color: var(--color-on-surface-variant);
+    font: var(--font-body-md);
+    cursor: pointer;
+    gap: var(--spacing-4);
+
+    & > input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      scale: 0;
+    }
+
+    /* Icon */
+    & > i {
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+
+    /* Checked */
+    &:has(input[type="radio"]:checked) {
+      color: var(--color-on-surface);
+      anchor-name: --active;
+    }
+  }
+}

@@ -1,0 +1,129 @@
+---
+const FAQs = [
+  {
+    question: "How is this different from other color tools?",
+    answer:
+      "Most tools give you a palette to look at. AlwanKit gives you a complete, production-ready color system, every role defined, dark mode included, accessible by default, exported as real code you can use immediately.",
+  },
+  {
+    question: "Can I use my own brand color as the base?",
+    answer:
+      "Absolutely. That's exactly the point, drop in your brand's primary color and AlwanKit builds a full system around it, keeping your identity while filling in everything else.",
+  },
+  {
+    question: "Are the generated colors actually accessible?",
+    answer:
+      "Yes. Every color is calculated to meet WCAG contrast standards automatically, light mode, dark mode, every role. You're not checking anything manually.",
+  },
+  {
+    question: "What formats can I export in?",
+    answer:
+      "CSS, SCSS, Tailwind, and JSON. Pick the one your project already uses and drop it straight in.",
+  },
+  {
+    question: "Is it open source?",
+    answer:
+      "Fully. The code is on GitHub, free to use in personal and commercial projects, fork it, modify it, self-host it, No restrictions.",
+  },
+];
+---
+
+<section ui-section="faq">
+  <div class="head">
+    <div class="headings">
+      <div class="subtitle">
+        <i class="hgi hgi-stroke hgi-bubble-chat-question"></i> FAQ
+      </div>
+      <h1 class="title">Quick answers</h1>
+    </div>
+    <p class="description">Just the things you probably want to know.</p>
+  </div>
+  <div class="core">
+    <div ui-slot="accordion">
+      {
+        FAQs.map((faq) => (
+          <div ui-slot="accordion-item">
+            <label ui-slot="accordion-trigger">
+              <i class="hgi hgi-stroke hgi-bubble-chat-question" />
+              {faq.question}
+              <input type="checkbox" name="my-accordion" />
+            </label>
+            <div ui-slot="accordion-content" role="region">
+              <p>{faq.answer}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  [ui-section="faq"] {
+    display: grid;
+    gap: var(--spacing-32);
+    grid-template-columns: repeat(2, 1fr);
+
+    .head {
+      display: flex;
+      gap: var(--spacing-12);
+      flex-direction: column;
+
+      .headings {
+        display: grid;
+        gap: var(--spacing-8);
+
+        .subtitle {
+          font: var(--font-body-sm);
+          border-radius: var(--radius-rounded);
+          padding: var(--spacing-2) var(--spacing-8);
+          background-color: var(--color-surface-container-lowest);
+          box-shadow: var(--shadow-lg);
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-4);
+          width: fit-content;
+
+          & > i {
+            color: var(--color-primary);
+          }
+        }
+
+        .title {
+          font: var(--font-headline-lg);
+        }
+      }
+
+      .description {
+        width: 80%;
+        color: var(--color-on-surface-variant);
+      }
+    }
+
+    .core {
+    }
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+
+      .head {
+        .description {
+          width: 100%;
+        }
+      }
+    }
+
+    @media (max-width: 769px) {
+      .head {
+        .headings {
+          .title {
+            font: var(--font-title-lg);
+          }
+        }
+      }
+
+      .core {
+      }
+    }
+  }
+</style>

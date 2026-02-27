@@ -1,0 +1,73 @@
+<section ui-section="cta">
+  <div class="core">
+    <h1 class="heading">
+      One <span>color</span> away from <br /> a full design system
+    </h1>
+    <p class="description">
+      Pick a color, let AlwanKit do the rest, and ship a color system you're
+      actually proud of.
+    </p>
+    <div class="actions">
+      <a
+        href="/colors"
+        ui-slot="button"
+        data-variant="primary"
+        data-mode="filled"
+        data-size="lg">
+        Try it now
+      </a>
+      <a
+        href="https://github.com/BadreddineIbril"
+        target="_blank"
+        ui-slot="button"
+        data-variant="neutral"
+        data-mode="filled"
+        data-size="lg">
+        Star on GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  [ui-section="cta"] {
+    .core {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--spacing-12);
+
+      .heading {
+        text-transform: capitalize;
+        font: var(--font-display-md);
+
+        span {
+          color: var(--color-primary);
+        }
+      }
+
+      .description {
+        font: var(--font-body-lg);
+        color: var(--color-on-surface-variant);
+      }
+
+      .actions {
+        display: flex;
+        gap: var(--spacing-12);
+        justify-content: center;
+        margin-block-start: var(--spacing-12);
+
+        & > [ui-slot="button"] {
+          min-width: 150px;
+        }
+      }
+
+      @media (max-width: 769px) {
+        .heading {
+          font: var(--font-headline-lg);
+        }
+      }
+    }
+  }
+</style>

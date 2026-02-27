@@ -1,0 +1,207 @@
+---
+import { Code } from "astro:components";
+
+const EXPORTS = [
+  {
+    format: "css",
+    label: "variables.css",
+    code: ":root {\n --primary: hsl(200 75% 35%);\n --on-primary: hsl(0 0% 100%);\n --primary-container: hsl(200 65% 90%);\n --on-primary-container: hsl(200 76% 10%);",
+  },
+  {
+    format: "scss",
+    label: "colors.scss",
+    code: '$colors-light: (\n "primary": hsl(200 75% 35%),\n "on-primary": hsl(0 0% 100%),\n "primary-container": hsl(200 65% 90%),\n "on-primary-container": hsl(200 76% 10%),',
+  },
+  {
+    format: "json",
+    label: "tokens.json",
+    code: '{\n "light": {\n "primary": "hsl(200 75% 35%)",\n "on-primary": "hsl(0 0% 100%)",\n "primary-container": "hsl(200 65% 90%)",\n "on-primary-container": "hsl(200 76% 10%)"',
+  },
+  {
+    format: "tailwind",
+    label: "tailwind.config",
+    code: `darkMode: ["class", '[data-theme="dark"]'],\n theme: {\n  extend: {\n   colors: {\n    "primary": "hsl(200 75% 35%)",\n    "on-primary": "hsl(0 0% 100%)",`,
+  },
+];
+---
+
+<section ui-section="export">
+  <div class="head">
+    <div class="headings">
+      <div class="subtitle">
+        <i class="hgi hgi-stroke hgi-source-code"></i> Export
+      </div>
+      <h1 class="title">Export production ready code</h1>
+    </div>
+    <p class="description">
+      Your developers will love the clean, tokenized output. Export to CSS,
+      Tailwind, JSON, or SCSS with a single click.
+    </p>
+  </div>
+  <div class="core">
+    {
+      EXPORTS.map((exp) => (
+        <div class="card">
+          <div class="format">
+            <div
+              ui-slot="status-badge"
+              data-variant="light"
+              data-status="disabled">
+              <span ui-slot="badge-dot" /> {exp.label}
+            </div>
+            <a
+              href={`/export?format=${exp.format}`}
+              ui-slot="link-button"
+              data-variant="gray"
+              data-size="md">
+              View more
+            </a>
+          </div>
+          <div class="content">
+            <Code
+              code={exp.code}
+              lang={exp.format === "tailwind" ? "json" : exp.format}
+              themes={{
+                light: "github-light",
+                dark: "github-dark",
+              }}
+            />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  [ui-section="export"] {
+    display: grid;
+    gap: var(--spacing-32);
+
+    .head {
+      display: flex;
+      gap: var(--spacing-12);
+      align-items: flex-end;
+      justify-content: space-between;
+
+      .headings {
+        display: grid;
+        gap: var(--spacing-8);
+
+        .subtitle {
+          font: var(--font-body-sm);
+          border-radius: var(--radius-rounded);
+          padding: var(--spacing-2) var(--spacing-8);
+          background-color: var(--color-surface-container-lowest);
+          box-shadow: var(--shadow-lg);
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-4);
+          width: fit-content;
+
+          & > i {
+            color: var(--color-primary);
+          }
+        }
+
+        .title {
+          font: var(--font-headline-lg);
+        }
+      }
+
+      .description {
+        width: 30%;
+        text-wrap: auto;
+        text-align: justify;
+        color: var(--color-on-surface-variant);
+      }
+    }
+
+    .core {
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-surface-variant);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      .card {
+        &:first-child,
+        &:nth-child(2) {
+          border-block-end: 1px solid var(--color-surface-variant);
+        }
+
+        &:nth-child(even) {
+          border-inline-start: 1px solid var(--color-surface-variant);
+        }
+
+        .format {
+          padding: var(--spacing-16);
+          border-block-end: 1px solid var(--color-surface-variant);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .content {
+          position: relative;
+
+          > * {
+            height: 100%;
+            padding: var(--spacing-16);
+            background-color: var(--color-surface-container-lowest) !important;
+          }
+
+          &::before {
+            content: "";
+            width: 100%;
+            position: absolute;
+            padding: var(--spacing-24);
+            inset-block-end: var(--spacing-0);
+            background-image: linear-gradient(
+              to bottom,
+              transparent,
+              var(--color-surface-container-lowest)
+            );
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .head {
+        align-items: flex-start;
+        flex-direction: column;
+
+        .description {
+          width: 100%;
+          text-align: start;
+          text-wrap: balance;
+        }
+      }
+    }
+
+    @media (max-width: 769px) {
+      .head {
+        .headings {
+          .title {
+            font: var(--font-title-lg);
+          }
+        }
+      }
+
+      .core {
+        grid-template-columns: 1fr;
+
+        .card {
+          &:nth-child(even) {
+            border-inline-start: none;
+          }
+
+          &:not(:last-child) {
+            border-block-end: 1px solid var(--color-surface-variant);
+          }
+        }
+      }
+    }
+  }
+</style>

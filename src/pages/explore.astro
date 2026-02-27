@@ -1,0 +1,205 @@
+---
+import BaseLayout from "@/components/layouts/base-layout.astro";
+
+const PALETTES = [
+  { label: "Claude", harmony: "analogous", h: 28, s: 55, l: 52 },
+  { label: "Material Design", harmony: "triadic", h: 210, s: 85, l: 50 },
+  { label: "Air", harmony: "monochromatic", h: 200, s: 55, l: 58 },
+  { label: "Dribble", harmony: "monochromatic", h: 335, s: 90, l: 55 },
+  { label: "Shopify", harmony: "analogous", h: 150, s: 70, l: 45 },
+  { label: "Pinterest", harmony: "monochromatic", h: 350, s: 85, l: 48 },
+];
+---
+
+<BaseLayout
+  title="Explore"
+  description="Famous brand color systems, ready to use.">
+  <main ui-page="explore">
+    <div class="head">
+      <a
+        href="/"
+        ui-slot="button"
+        data-variant="neutral"
+        data-mode="lighter"
+        data-size="md">
+        <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
+        Back to home
+      </a>
+      <h3 class="title">Explore</h3>
+      <span></span>
+    </div>
+    <div class="core">
+      {
+        PALETTES.map((palette) => (
+          <div
+            class="palette"
+            data-color
+            data-theme="light"
+            data-harmony={palette.harmony}
+            style={`--base-hue: ${palette.h}; --base-saturation: ${palette.s}%; --base-lightness: ${palette.l}%;`}>
+            <div class="colors">
+              {[...Array(6)].map((_) => (
+                <button data-token>
+                  <i class="hgi hgi-stroke hgi-tick-02" />
+                </button>
+              ))}
+            </div>
+            <div class="info">
+              <span class="label">{palette.label}</span>
+              <a
+                href={`/colors?h=${palette.h}&s=${palette.s}&l=${palette.l}&harmony=${palette.harmony}&name=${palette.label}`}
+                ui-slot="button"
+                data-variant="neutral"
+                data-mode="ghost"
+                data-size="sm"
+                data-as-icon
+                aria-label="Preview">
+                <i class="hgi hgi-stroke hgi-view" />
+              </a>
+              <a
+                href={`/export?h=${palette.h}&s=${palette.s}&l=${palette.l}&harmony=${palette.harmony}&name=${palette.label}`}
+                ui-slot="button"
+                data-variant="neutral"
+                data-mode="ghost"
+                data-size="sm"
+                data-as-icon
+                aria-label="Copy">
+                <i class="hgi hgi-stroke hgi-file-export" />
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  import { rgbToHsl } from "@/utils/helpers";
+
+  const tokens = document.querySelectorAll<HTMLButtonElement>("[data-token]");
+
+  tokens.forEach((token) =>
+    token.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(
+        rgbToHsl(getComputedStyle(token).backgroundColor),
+      );
+
+      token.setAttribute("data-copied", "");
+
+      setTimeout(() => {
+        token.disabled = false;
+        token.removeAttribute("data-copied");
+      }, 2000);
+    }),
+  );
+</script>
+
+<style>
+  [ui-page="explore"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-48);
+
+    .head {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+
+      .title {
+        font: var(--font-headline-lg);
+        text-align: center;
+      }
+    }
+
+    .core {
+      display: grid;
+      gap: var(--spacing-16);
+      grid-template-columns: repeat(3, 1fr);
+
+      .palette {
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        border-radius: var(--radius-lg);
+
+        .colors {
+          height: auto;
+          display: grid;
+          aspect-ratio: 5 / 2;
+          grid-template-columns: repeat(6, 1fr);
+
+          button {
+            & > i {
+              display: none;
+              font-size: 20px;
+            }
+
+            &[data-copied] > i {
+              display: block;
+            }
+
+            &:first-child {
+              color: var(--color-on-primary);
+              background-color: var(--color-primary);
+            }
+
+            &:nth-child(2) {
+              color: var(--color-on-primary-container);
+              background-color: var(--color-primary-container);
+            }
+
+            &:nth-child(3) {
+              color: var(--color-on-secondary);
+              background-color: var(--color-secondary);
+            }
+
+            &:nth-child(4) {
+              color: var(--color-on-secondary-container);
+              background-color: var(--color-secondary-container);
+            }
+
+            &:nth-child(5) {
+              color: var(--color-on-tertiary);
+              background-color: var(--color-tertiary);
+            }
+
+            &:last-child {
+              color: var(--color-on-tertiary-container);
+              background-color: var(--color-tertiary-container);
+            }
+          }
+        }
+
+        .info {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: var(--spacing-16);
+          background-color: var(--color-surface-container-lowest);
+
+          .label {
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .core {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 769px) {
+      .head {
+        display: flex !important;
+        flex-direction: column-reverse;
+        gap: var(--spacing-12);
+      }
+
+      .core {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+</style>

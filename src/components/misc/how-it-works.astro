@@ -1,0 +1,289 @@
+---
+import CharacterOne from "@/assets/icons/shape-1.svg";
+import CharacterTwo from "@/assets/icons/shape-3.svg";
+import CharacterThree from "@/assets/icons/shape-2.svg";
+import CharacterFour from "@/assets/icons/shape-4.svg";
+---
+
+<section ui-section="how-it-works">
+  <div class="head">
+    <div class="headings">
+      <div class="subtitle">
+        <i class="hgi hgi-stroke hgi-setting-06"></i> How it works?
+      </div>
+      <h1 class="title">Simple by design</h1>
+    </div>
+    <p class="description">
+      A clear set of performance metrics reflecting quality, reliability, and
+      long-term collaboration.
+    </p>
+  </div>
+  <div class="core">
+    <div class="card">
+      <div class="content">
+        <span class="index">/001/</span>
+        <div class="info">
+          <h3 class="label">Color + Harmony</h3>
+          <p class="detail">
+            Pick a color and tell it how you want the palette to feel. Nothing
+            random, everything connected.
+          </p>
+        </div>
+      </div>
+      <div class="media">
+        <div class="visual">
+          <div class="box">
+            <span class="name">Monochromatic</span>
+            <CharacterOne />
+          </div>
+          <div class="box">
+            <span class="name">Complementary</span>
+            <CharacterTwo />
+          </div>
+          <div class="box">
+            <span class="name">Triadic</span>
+            <CharacterThree />
+          </div>
+          <div class="box">
+            <span class="name">Analogous</span>
+            <CharacterFour />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content">
+        <span class="index">/002/</span>
+        <div class="info">
+          <h3 class="label">Accessibility First</h3>
+          <p class="detail">
+            Every color is auto-adapted to meet WCAG standards as it's
+            generated.
+          </p>
+        </div>
+      </div>
+      <div class="media">
+        <div class="visual">
+          <div class="accessibility">
+            <span class="type">Aa</span>
+            <div
+              ui-slot="status-badge"
+              data-variant="light"
+              data-status="completed">
+              <i class="hgi hgi-stroke hgi-checkmark-circle-02"></i> Pass
+            </div>
+          </div>
+          <div class="accessibility">
+            <span class="type">Aa</span>
+            <div
+              ui-slot="status-badge"
+              data-variant="light"
+              data-status="failed">
+              <i class="hgi hgi-stroke hgi-alert-circle"></i> Fail
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content">
+        <span class="index">/003/</span>
+        <div class="info">
+          <h3 class="label">Light + Dark</h3>
+          <p class="detail">
+            Both themes are generated at once, calculated from the same base.
+            Consistent, balanced, and ready.
+          </p>
+        </div>
+      </div>
+      <div class="media">
+        <label class="theme">
+          Dark mode
+          <input ui-slot="switch" type="checkbox" name="theme" checked />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    [ui-section="how-it-works"] {
+      display: grid;
+      gap: var(--spacing-32);
+      grid-template-columns: repeat(2, 1fr);
+
+      .head {
+        display: flex;
+        gap: var(--spacing-12);
+        flex-direction: column;
+
+        .headings {
+          display: grid;
+          gap: var(--spacing-8);
+
+          .subtitle {
+            font: var(--font-body-sm);
+            border-radius: var(--radius-rounded);
+            padding: var(--spacing-2) var(--spacing-8);
+            background-color: var(--color-surface-container-lowest);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-4);
+            width: fit-content;
+
+            & > i {
+              color: var(--color-primary);
+            }
+          }
+
+          .title {
+            font: var(--font-headline-lg);
+          }
+        }
+
+        .description {
+          width: 80%;
+          color: var(--color-on-surface-variant);
+        }
+      }
+
+      .core {
+        display: grid;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        border-radius: var(--radius-lg);
+
+        .card {
+          padding: var(--spacing-24);
+          display: flex;
+          gap: var(--spacing-24);
+          justify-content: space-between;
+
+          &:first-child {
+            color: var(--color-on-primary-container);
+            background-color: var(--color-primary-container);
+          }
+
+          &:nth-child(2) {
+            color: var(--color-on-secondary-container);
+            background-color: var(--color-secondary-container);
+          }
+
+          &:last-child {
+            color: var(--color-on-tertiary-container);
+            background-color: var(--color-tertiary-container);
+          }
+
+          .content {
+            display: flex;
+            gap: var(--spacing-24);
+            flex-direction: column;
+            justify-content: space-between;
+
+            .info {
+              display: grid;
+              gap: var(--spacing-4);
+
+              .label {
+                font: var(--font-title-md);
+              }
+
+              .detail {
+                opacity: 0.8;
+              }
+            }
+          }
+
+          .media {
+            .visual {
+              display: flex;
+              flex-wrap: wrap;
+              gap: var(--spacing-12);
+              justify-content: center;
+
+              .box {
+                width: max-content;
+                padding: var(--spacing-8) var(--spacing-12);
+                border-radius: var(--radius-rounded);
+                background-color: var(--color-surface-container-lowest);
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-8);
+
+                & > svg {
+                  width: var(--spacing-24);
+                  height: var(--spacing-24);
+                }
+              }
+
+              .accessibility {
+                padding: var(--spacing-8);
+                border-radius: var(--radius-rounded);
+                background-color: var(--color-surface-container-lowest);
+                display: flex;
+                gap: var(--spacing-16);
+                justify-content: space-between;
+                width: 110px;
+
+                .type {
+                  text-align: center;
+                  font: var(--font-title-md);
+                }
+
+                &:last-child {
+                  .type {
+                    opacity: 0.3;
+                  }
+                }
+              }
+            }
+
+            .theme {
+              padding: var(--spacing-8) var(--spacing-12);
+              border-radius: var(--radius-rounded);
+              background-color: var(--color-surface-container-lowest);
+              display: flex;
+              align-items: center;
+              gap: var(--spacing-8);
+              white-space: nowrap;
+
+              --color-primary: var(--color-tertiary);
+              --color-on-primary: var(--color-on-tertiary);
+            }
+
+            &:has(.theme) {
+              min-width: 130px;
+              max-width: 130px;
+            }
+          }
+        }
+      }
+
+      @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+
+        .head {
+          .description {
+            width: 100%;
+          }
+        }
+      }
+
+      @media (max-width: 769px) {
+        .head {
+          .headings {
+            .title {
+              font: var(--font-title-lg);
+            }
+          }
+        }
+
+        .core {
+          .card {
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  </style>
+</section>
