@@ -4,6 +4,7 @@ import { Font } from "astro:assets";
 import Header from "./partials/header.astro";
 import Footer from "./partials/footer.astro";
 import Fab from "@/components/misc/fab.astro";
+import GoogleAnalytics from "@/components/misc/google-analytics.astro";
 
 interface Props {
   title: string;
@@ -21,6 +22,8 @@ const { title, description } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
+
+    <GoogleAnalytics />
 
     <title>{(title ? `${title} | ` : "") + "AlwanKit"}</title>
     <meta name="description" content={description} />
@@ -82,6 +85,7 @@ const { title, description } = Astro.props;
 
     <Font cssVariable="--font-dm-sans" preload />
   </head>
+
   <body>
     <Header />
     <slot />

@@ -11,6 +11,9 @@ importers:
       '@astrojs/netlify':
         specifier: ^6.6.4
         version: 6.6.4(@types/node@25.3.2)(astro@5.17.2(@netlify/blobs@10.7.0)(@types/node@25.3.2)(jiti@2.6.1)(rollup@4.57.1)(sass@1.97.3)(typescript@5.9.3)(yaml@2.8.2))(jiti@2.6.1)(rollup@4.57.1)(sass@1.97.3)(yaml@2.8.2)
+      '@astrojs/partytown':
+        specifier: ^2.1.4
+        version: 2.1.4
       astro:
         specifier: ^5.17.1
         version: 5.17.2(@netlify/blobs@10.7.0)(@types/node@25.3.2)(jiti@2.6.1)(rollup@4.57.1)(sass@1.97.3)(typescript@5.9.3)(yaml@2.8.2)
@@ -30,6 +33,9 @@ packages:
     resolution: {integrity: sha512-wKLH0hYenuS7UZNE9ag8I9mP094EZzt3OStFWvj+xrlOc9xVP7vYiVvgX5Ua8TkuXnvMWfyy6zEu+1cSIKMx9w==}
     peerDependencies:
       astro: ^5.7.0
+
+  '@astrojs/partytown@2.1.4':
+    resolution: {integrity: sha512-loUrAu0cGYFDC6dHVRiomdsBJ41VjDYXPA+B3Br51V5hENFgDSOLju86OIj1TvBACcsB22UQV7BlppODDG5gig==}
 
   '@astrojs/prism@3.3.0':
     resolution: {integrity: sha512-q8VwfU/fDZNoDOf+r7jUnMC2//H2l0TuQ6FkGJL8vD8nw/q5KiL3DS1KKBI3QhI9UQhpJ5dc7AtqfbXWuOgLCQ==}
@@ -1007,6 +1013,11 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@qwik.dev/partytown@0.11.2':
+    resolution: {integrity: sha512-795y49CqBiKiwKAD+QBZlzlqEK275hVcazZ7wBPSfgC23L+vWuA7PJmMpgxojOucZHzYi5rAAQ+IP1I3BKVZxw==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   '@rollup/pluginutils@5.3.0':
     resolution: {integrity: sha512-5EdhGZtnu3V88ces7s53hhfK5KSASnJZv8Lulpc04cWO3REESroJXg73DFsOmgbU2BhwV0E20bu2IDZb3VKW4Q==}
@@ -3936,6 +3947,11 @@ snapshots:
       - uploadthing
       - yaml
 
+  '@astrojs/partytown@2.1.4':
+    dependencies:
+      '@qwik.dev/partytown': 0.11.2
+      mrmime: 2.0.1
+
   '@astrojs/prism@3.3.0':
     dependencies:
       prismjs: 1.30.0
@@ -4842,6 +4858,10 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@qwik.dev/partytown@0.11.2':
+    dependencies:
+      dotenv: 16.6.1
 
   '@rollup/pluginutils@5.3.0(rollup@4.57.1)':
     dependencies:
