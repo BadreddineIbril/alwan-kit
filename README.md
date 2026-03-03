@@ -56,6 +56,31 @@ From these, the entire palette is derived using `hsl()` and `calc()`, no JavaScr
 
 The result is a self-contained, fully dynamic color system that lives entirely in the CSS cascade.
 
+## Tokens vs Shades
+
+| Tokens                       | Shades (50 - 900)   |
+| ---------------------------- | ------------------- |
+| --color-primary              | --color-primary-500 |
+| --color-on-primary           | --color-primary-50  |
+| --color-primary-container    | --color-primary-100 |
+| --color-on-primary-container | --color-primary-900 |
+
+```css
+// With Shades
+[ui-slot="button"] {
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-500);
+}
+```
+
+```css
+// With Tokens
+[ui-slot="button"] {
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+}
+```
+
 ## Why pure CSS?
 
 No JavaScript means no bundle cost, no layout shift, no hydration issues. The entire system runs on CSS custom properties lightweight, stable, and works in every environment.
