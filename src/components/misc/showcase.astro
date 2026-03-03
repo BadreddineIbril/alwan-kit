@@ -16,13 +16,10 @@ import Character4 from "@/assets/icons/shape-4.svg";
         </div>
       </div>
       <div class="preview">
-        <div ui-slot="skeleton" data-radius="circled" aria-label="loading...">
-        </div>
+        <div ui-slot="skeleton" data-radius="circled" aria-busy="true"></div>
         <div class="lines">
-          <div ui-slot="skeleton" data-radius="rounded" aria-label="loading...">
-          </div>
-          <div ui-slot="skeleton" data-radius="rounded" aria-label="loading...">
-          </div>
+          <div ui-slot="skeleton" data-radius="rounded" aria-busy="true"></div>
+          <div ui-slot="skeleton" data-radius="rounded" aria-busy="true"></div>
         </div>
       </div>
     </div>

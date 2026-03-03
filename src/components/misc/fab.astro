@@ -1,12 +1,19 @@
 <div ui-misc="fab">
-  <input type="color" name="base-color" value="#16709C" ui-fab="color" />
+  <input
+    type="color"
+    name="base-color"
+    value="#16709C"
+    ui-fab="color"
+    aria-label="Base color"
+  />
   <select
     name="harmony"
     ui-slot="button"
     data-variant="neutral"
     data-mode="stroke"
     data-size="md"
-    ui-fab="harmony">
+    ui-fab="harmony"
+    aria-label="Harmony">
     <option value="monochromatic">Monochromatic</option>
     <option value="complementary">Complementary</option>
     <option value="triadic">Triadic</option>

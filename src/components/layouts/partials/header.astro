@@ -55,7 +55,7 @@ const pathname = Astro.url.pathname;
         }
       </ul>
       <div class="socials">
-        <ol class="links">
+        <ul class="links">
           {
             [
               {
@@ -74,21 +74,23 @@ const pathname = Astro.url.pathname;
                 url: "https://ko-fi.com/bibril",
               },
             ].map((social) => (
-              <a
-                href={social.url}
-                target="_blank"
-                class="link"
-                ui-slot="button"
-                data-variant="neutral"
-                data-mode="ghost"
-                data-size="xs"
-                data-as-icon
-                aria-label={social.label}>
-                <i class={`hgi hgi-stroke hgi-${social.icon}`} />
-              </a>
+              <li>
+                <a
+                  href={social.url}
+                  target="_blank"
+                  class="link"
+                  ui-slot="button"
+                  data-variant="neutral"
+                  data-mode="ghost"
+                  data-size="xs"
+                  data-as-icon
+                  aria-label={social.label}>
+                  <i class={`hgi hgi-stroke hgi-${social.icon}`} />
+                </a>
+              </li>
             ))
           }
-        </ol>
+        </ul>
         <span class="copyright">© {new Date().getFullYear()} AlwanKit</span>
       </div>
     </div>
