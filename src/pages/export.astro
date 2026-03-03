@@ -1,4 +1,5 @@
 ---
+import { COLOR_TYPES } from "@/utils/constants";
 import BaseLayout from "@/components/layouts/base-layout.astro";
 import CodeSource from "@/components/misc/code-source.astro";
 
@@ -17,7 +18,7 @@ const name = Astro.url.searchParams.get("name");
         data-mode="lighter"
         data-size="md">
         <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
-        Back to home
+        <span>Back to home</span>
       </a>
       <h3 class="title">
         Export {
@@ -31,7 +32,18 @@ const name = Astro.url.searchParams.get("name");
           )
         }
       </h3>
-      <span></span>
+      <div class="color-format">
+        <div ui-slot="segmented-control" role="tablist">
+          {
+            COLOR_TYPES.map((type) => (
+              <label ui-slot="segmented-control-trigger" role="tab">
+                {type.label}
+                <input type="radio" name="color-format" value={type.value} />
+              </label>
+            ))
+          }
+        </div>
+      </div>
     </div>
     <div class="core">
       <CodeSource />
@@ -58,13 +70,36 @@ const name = Astro.url.searchParams.get("name");
         justify-content: center;
         gap: var(--spacing-8);
       }
+
+      .color-format {
+        display: flex;
+        justify-content: flex-end;
+
+        [ui-slot="segmented-control"] {
+          width: fit-content;
+        }
+      }
     }
 
     @media (max-width: 769px) {
       & > .head {
-        display: flex !important;
-        flex-direction: column-reverse;
-        gap: var(--spacing-12);
+        gap: var(--spacing-24);
+
+        .color-format {
+          grid-column: 1 / 4;
+
+          [ui-slot="segmented-control"] {
+            width: 100%;
+          }
+        }
+
+        [ui-slot="button"] {
+          width: var(--button-size);
+
+          & > span {
+            display: none;
+          }
+        }
       }
     }
   }

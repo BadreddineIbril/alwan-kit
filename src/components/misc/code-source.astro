@@ -64,6 +64,9 @@ const hasColor = hue && saturation && lightness;
   const save = document.querySelector<HTMLButtonElement>("[data-download]");
   const formats =
     document.querySelectorAll<HTMLInputElement>('[name="export"]');
+  const types = document.querySelectorAll<HTMLInputElement>(
+    '[name="color-format"]',
+  );
 
   let selectedFormat: "css" | "scss" | "json" | "tailwind" | "dynamic" =
     ([...formats].find((format) => format.checked)?.value as
@@ -118,6 +121,10 @@ const hasColor = hue && saturation && lightness;
       selectedFormat = e?.target?.value || "css";
       setCode();
     });
+  });
+
+  types.forEach((type) => {
+    type.addEventListener("change", () => setCode());
   });
 
   function setCode() {

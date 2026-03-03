@@ -236,7 +236,7 @@ const hasColor = hue && saturation && lightness;
         data-mode="lighter"
         data-size="md">
         <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
-        Back to home
+        <span>Back to home</span>
       </a>
       <h3 class="title">
         Colors {
@@ -311,7 +311,8 @@ const hasColor = hue && saturation && lightness;
 </BaseLayout>
 
 <script>
-  import { rgbToHsl } from "@/utils/helpers";
+  import Color from "@/utils/color";
+  import { extractRGB } from "@/utils/helpers";
 
   const tokens = document.querySelectorAll<HTMLButtonElement>("[data-token]");
 
@@ -319,9 +320,8 @@ const hasColor = hue && saturation && lightness;
     token.addEventListener("click", async () => {
       const label = token.querySelector("span");
 
-      await navigator.clipboard.writeText(
-        rgbToHsl(getComputedStyle(token).backgroundColor),
-      );
+      const { r, g, b } = extractRGB(getComputedStyle(token).backgroundColor);
+      await navigator.clipboard.writeText(new Color(r, g, b).toHsl());
 
       if (!label) return;
 
@@ -430,9 +430,13 @@ const hasColor = hue && saturation && lightness;
 
     @media (max-width: 769px) {
       & > .head {
-        display: flex !important;
-        flex-direction: column-reverse;
-        gap: var(--spacing-12);
+        [ui-slot="button"] {
+          width: var(--button-size);
+
+          & > span {
+            display: none;
+          }
+        }
       }
 
       .core {

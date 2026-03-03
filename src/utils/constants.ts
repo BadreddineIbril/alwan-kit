@@ -46,4 +46,11 @@ const FORMATS = [
   { label: "Dynamic", value: "dynamic" },
 ];
 
-export { COLORS, FORMATS };
+const COLOR_TYPES = [
+  { label: "Hex", value: "hex" },
+  { label: "Rgb", value: "rgb" },
+  { label: "Hsl", value: "hsl" },
+  { label: "Oklch", value: "oklch" },
+];
+
+export { COLORS, FORMATS, COLOR_TYPES };

@@ -1,17 +1,41 @@
 import { COLORS } from "./constants";
-import { rgbToHsl } from "./helpers";
+import Color from "./color";
+import { extractRGB } from "./helpers";
 
 function getColors(theme: "light" | "dark" = "light") {
   const element = document.createElement("div");
   if (theme === "dark") element.dataset.theme = "dark";
 
+  const formats = document.querySelectorAll<HTMLInputElement>(
+    '[name="color-format"]',
+  );
+  let format = localStorage.getItem("color-format") ?? "hsl";
+
+  formats.forEach((f) => {
+    f.checked = f.value === format;
+    f.onchange = (e) => {
+      format = (e.target as HTMLInputElement)?.value ?? "hsl";
+      localStorage.setItem("color-format", format);
+    };
+  });
+
+  localStorage.setItem("color-format", format);
   document.querySelector("[data-code]")?.appendChild(element);
 
   const styles = getComputedStyle(element);
+
   const colors = Object.fromEntries(
     COLORS.map((name) => {
       element.style.color = `var(--color-${name})`;
-      return [name, rgbToHsl(styles.color)];
+      const { r, g, b } = extractRGB(styles.color);
+      const color = new Color(r, g, b);
+
+      return [
+        name,
+        color[
+          `to${format[0].toUpperCase()}${format.slice(1)}` as keyof Color
+        ]?.() ?? styles.color,
+      ];
     }),
   );
 

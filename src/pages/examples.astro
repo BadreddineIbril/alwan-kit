@@ -17,7 +17,7 @@ import CharacterThree from "@/assets/icons/shape-3.svg";
         data-mode="lighter"
         data-size="md">
         <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
-        Back to home
+        <span>Back to home</span>
       </a>
       <h3 class="title">Examples</h3>
       <span></span>
@@ -579,9 +579,17 @@ import CharacterThree from "@/assets/icons/shape-3.svg";
 
     @media (max-width: 769px) {
       & > .head {
-        display: flex !important;
-        flex-direction: column-reverse;
-        gap: var(--spacing-12);
+        .title {
+          display: contents;
+        }
+
+        [ui-slot="button"] {
+          width: var(--button-size);
+
+          & > span {
+            display: none;
+          }
+        }
       }
     }
   }

@@ -23,7 +23,7 @@ const PALETTES = [
         data-mode="lighter"
         data-size="md">
         <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
-        Back to home
+        <span>Back to home</span>
       </a>
       <h3 class="title">Explore</h3>
       <span></span>
@@ -75,15 +75,15 @@ const PALETTES = [
 </BaseLayout>
 
 <script>
-  import { rgbToHsl } from "@/utils/helpers";
+  import Color from "@/utils/color";
+  import { extractRGB } from "@/utils/helpers";
 
   const tokens = document.querySelectorAll<HTMLButtonElement>("[data-token]");
 
   tokens.forEach((token) =>
     token.addEventListener("click", async () => {
-      await navigator.clipboard.writeText(
-        rgbToHsl(getComputedStyle(token).backgroundColor),
-      );
+      const { r, g, b } = extractRGB(getComputedStyle(token).backgroundColor);
+      await navigator.clipboard.writeText(new Color(r, g, b).toHsl());
 
       token.setAttribute("data-copied", "");
 
@@ -192,9 +192,17 @@ const PALETTES = [
 
     @media (max-width: 769px) {
       .head {
-        display: flex !important;
-        flex-direction: column-reverse;
-        gap: var(--spacing-12);
+        .title {
+          display: contents;
+        }
+
+        [ui-slot="button"] {
+          width: var(--button-size);
+
+          & > span {
+            display: none;
+          }
+        }
       }
 
       .core {
