@@ -1,0 +1,103 @@
+---
+import BaseLayout from "@/components/layouts/base-layout.astro";
+---
+
+<BaseLayout title="Tools" description="Coming Soon">
+  <main ui-page="tools">
+    <section ui-section="hero">
+      <div class="wrapper">
+        <div class="announcement">
+          <i class="hgi hgi-stroke hgi-megaphone-02"></i> New tools dropping soon
+        </div>
+        <h1 class="heading">
+          Coming <span>Soon</span>
+        </h1>
+        <p class="description">
+          The tools page is under construction. Expect color extraction,
+          contrast checking, and a few things we haven't announced yet.
+        </p>
+        <a
+          href="/"
+          ui-slot="button"
+          data-variant="primary"
+          data-mode="filled"
+          data-size="lg">
+          <i class="hgi hgi-stroke hgi-arrow-left-01"></i>
+          Back Home
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  [ui-page="tools"] {
+    [ui-section="hero"] {
+      display: flex;
+      place-content: center;
+      padding-block-start: calc(var(--spacing-64) * 2);
+
+      .wrapper {
+        width: 600px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: var(--spacing-24);
+        position: relative;
+
+        .announcement {
+          font: var(--font-body-sm);
+          border-radius: var(--radius-rounded);
+          padding: var(--spacing-4) var(--spacing-8);
+          background-color: var(--color-surface-container-lowest);
+          box-shadow: var(--shadow-lg);
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-4);
+          width: max-content;
+
+          & > i {
+            color: var(--color-primary);
+          }
+        }
+
+        .heading {
+          text-transform: capitalize;
+          font: var(--font-display-lg);
+
+          span {
+            color: var(--color-primary);
+          }
+        }
+
+        .description {
+          font: var(--font-body-lg);
+          color: var(--color-on-surface-variant);
+        }
+
+        .actions {
+          display: flex;
+          gap: var(--spacing-12);
+
+          & > [ui-slot="button"] {
+            min-width: 150px;
+          }
+        }
+      }
+
+      @media (max-width: 769px) {
+        padding-block-start: var(--spacing-64);
+
+        .wrapper {
+          width: 100%;
+
+          .heading {
+            font: var(--font-headline-lg);
+          }
+        }
+      }
+    }
+  }
+</style>
