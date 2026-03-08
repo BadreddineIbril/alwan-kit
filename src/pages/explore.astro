@@ -2,7 +2,51 @@
 import BaseLayout from "@/components/layouts/base-layout.astro";
 
 const PALETTES = [
-  { label: "Claude", harmony: "analogous", h: 28, s: 55, l: 52 },
+  { label: "Light Green", harmony: "analogous", h: 82.54, s: 88.29, l: 59.8 },
+  {
+    label: "AstroVista",
+    harmony: "monochromatic",
+    h: 15.18,
+    s: 72.65,
+    l: 54.12,
+  },
+  { label: "qrafthive", harmony: "monochromatic", h: 22.3, s: 75.51, l: 61.57 },
+  {
+    label: "Zen Inspired Theme",
+    harmony: "analogous",
+    h: 52.94,
+    s: 15.6,
+    l: 78.63,
+  },
+  { label: "Tiesen", harmony: "monochromatic", h: 225.71, s: 51.91, l: 50.42 },
+  { label: "Sage Green", harmony: "triadic", h: 96, s: 16.13, l: 69.61 },
+  { label: "2077", harmony: "analogous", h: 3.88, s: 62.9, l: 56.67 },
+  {
+    label: "Minimal Neutral",
+    harmony: "complementary",
+    h: 0,
+    s: 0.09,
+    l: 89.82,
+  },
+  { label: "MX-Brutalist", harmony: "triadic", h: 149.88, s: 100, l: 48.04 },
+  { label: "Deep Purple", harmony: "analogous", h: 262.89, s: 85.39, l: 65.1 },
+  { label: "NLAN", harmony: "complementary", h: 208.31, s: 100, l: 65.1 },
+  { label: "Terminal", harmony: "analogous", h: 135.29, s: 100, l: 50 },
+  {
+    label: "Professional Theme",
+    harmony: "analogous",
+    h: 217.22,
+    s: 91.22,
+    l: 59.8,
+  },
+  { label: "examdedo", harmony: "analogous", h: 30, s: 47.37, l: 62.75 },
+  {
+    label: "Lime green dhamaka",
+    harmony: "analogous",
+    h: 67.8,
+    s: 73.65,
+    l: 67.25,
+  },
   { label: "Material Design", harmony: "triadic", h: 210, s: 85, l: 50 },
   { label: "Air", harmony: "monochromatic", h: 200, s: 55, l: 58 },
   { label: "Dribble", harmony: "monochromatic", h: 335, s: 90, l: 55 },
@@ -29,47 +73,56 @@ const PALETTES = [
       <span></span>
     </div>
     <div class="core">
-      {
-        PALETTES.map((palette) => (
-          <div
-            class="palette"
-            data-color
-            data-theme="light"
-            data-harmony={palette.harmony}
-            style={`--base-hue: ${palette.h}; --base-saturation: ${palette.s}%; --base-lightness: ${palette.l}%;`}>
-            <div class="colors">
-              {[...Array(6)].map((_) => (
-                <button data-token>
-                  <i class="hgi hgi-stroke hgi-tick-02" />
-                </button>
-              ))}
+      <div class="note">
+        <h3 class="title">Note</h3>
+        <p class="description">
+          These palettes belong to the <a
+            ui-slot="link-button"
+            data-variant="primary"
+            data-size="md"
+            data-underline="true"
+            href="https://tweakcn.com/community"
+            target="_blank">tweakcn community</a
+          >. We just brought them here.
+        </p>
+      </div>
+      <div class="palettes">
+        {
+          PALETTES.map((palette) => (
+            <div
+              class="palette"
+              data-color
+              data-theme="light"
+              data-harmony={palette.harmony}
+              style={`--base-hue: ${palette.h}; --base-saturation: ${palette.s}%; --base-lightness: ${palette.l}%;`}>
+              <div class="details">
+                <div ui-slot="button-group" data-size="xxs" role="group">
+                  <a
+                    href={`/colors?h=${palette.h}&s=${palette.s}&l=${palette.l}&harmony=${palette.harmony}&name=${palette.label}`}
+                    ui-slot="button-group-item">
+                    Preview
+                  </a>
+                  <a
+                    href={`/export?h=${palette.h}&s=${palette.s}&l=${palette.l}&harmony=${palette.harmony}&name=${palette.label}`}
+                    ui-slot="button-group-item">
+                    Export
+                  </a>
+                </div>
+                <div class="colors">
+                  {[...Array(6)].map((_) => (
+                    <button data-token>
+                      <i class="hgi hgi-stroke hgi-tick-02" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div class="info">
+                <span class="label">{palette.label}</span>
+              </div>
             </div>
-            <div class="info">
-              <span class="label">{palette.label}</span>
-              <a
-                href={`/colors?h=${palette.h}&s=${palette.s}&l=${palette.l}&harmony=${palette.harmony}&name=${palette.label}`}
-                ui-slot="button"
-                data-variant="neutral"
-                data-mode="ghost"
-                data-size="sm"
-                data-as-icon
-                aria-label="Preview">
-                <i class="hgi hgi-stroke hgi-view" />
-              </a>
-              <a
-                href={`/export?h=${palette.h}&s=${palette.s}&l=${palette.l}&harmony=${palette.harmony}&name=${palette.label}`}
-                ui-slot="button"
-                data-variant="neutral"
-                data-mode="ghost"
-                data-size="sm"
-                data-as-icon
-                aria-label="Copy">
-                <i class="hgi hgi-stroke hgi-file-export" />
-              </a>
-            </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
   </main>
 </BaseLayout>
@@ -114,79 +167,112 @@ const PALETTES = [
 
     .core {
       display: grid;
-      gap: var(--spacing-16);
-      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-32);
 
-      .palette {
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
-        border-radius: var(--radius-lg);
+      .note {
+        display: grid;
+        gap: var(--spacing-8);
 
-        .colors {
-          height: auto;
-          display: grid;
-          aspect-ratio: 5 / 2;
-          grid-template-columns: repeat(6, 1fr);
-
-          button {
-            & > i {
-              display: none;
-              font-size: 20px;
-            }
-
-            &[data-copied] > i {
-              display: block;
-            }
-
-            &:first-child {
-              color: var(--color-on-primary);
-              background-color: var(--color-primary);
-            }
-
-            &:nth-child(2) {
-              color: var(--color-on-primary-container);
-              background-color: var(--color-primary-container);
-            }
-
-            &:nth-child(3) {
-              color: var(--color-on-secondary);
-              background-color: var(--color-secondary);
-            }
-
-            &:nth-child(4) {
-              color: var(--color-on-secondary-container);
-              background-color: var(--color-secondary-container);
-            }
-
-            &:nth-child(5) {
-              color: var(--color-on-tertiary);
-              background-color: var(--color-tertiary);
-            }
-
-            &:last-child {
-              color: var(--color-on-tertiary-container);
-              background-color: var(--color-tertiary-container);
-            }
-          }
+        .title {
+          font: var(--font-title-lg);
         }
 
-        .info {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: var(--spacing-16);
-          background-color: var(--color-surface-container-lowest);
+        .description {
+          display: ruby;
+          color: var(--color-on-surface-variant);
+        }
+      }
 
-          .label {
-            flex: 1;
+      .palettes {
+        display: grid;
+        gap: var(--spacing-16);
+        grid-template-columns: repeat(4, 1fr);
+
+        .palette {
+          overflow: hidden;
+          box-shadow: var(--shadow-lg);
+          border-radius: var(--radius-lg);
+          background-color: var(--color-surface-container-lowest);
+          padding: var(--spacing-16);
+          display: grid;
+          gap: var(--spacing-48);
+
+          .details {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            .colors {
+              display: flex;
+              gap: var(--spacing-6);
+
+              button {
+                width: var(--spacing-12);
+                height: var(--spacing-48);
+                border-radius: var(--radius-rounded);
+                transition: var(--transition-standard-default-spatial);
+
+                & > i {
+                  display: none;
+                  font-size: 12px;
+                }
+
+                &[data-copied] > i {
+                  display: block;
+                }
+
+                &:first-child {
+                  color: var(--color-on-primary);
+                  background-color: var(--color-primary);
+                }
+
+                &:nth-child(2) {
+                  color: var(--color-on-primary-container);
+                  background-color: var(--color-primary-container);
+                }
+
+                &:nth-child(3) {
+                  color: var(--color-on-secondary);
+                  background-color: var(--color-secondary);
+                }
+
+                &:nth-child(4) {
+                  color: var(--color-on-secondary-container);
+                  background-color: var(--color-secondary-container);
+                }
+
+                &:nth-child(5) {
+                  color: var(--color-on-tertiary);
+                  background-color: var(--color-tertiary);
+                }
+
+                &:last-child {
+                  color: var(--color-on-tertiary-container);
+                  background-color: var(--color-tertiary-container);
+                }
+              }
+            }
+          }
+
+          .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .label {
+              flex: 1;
+              font: var(--font-title-md);
+            }
           }
         }
       }
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1280px) {
       .core {
-        grid-template-columns: repeat(2, 1fr);
+        .palettes {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
     }
 
@@ -206,7 +292,9 @@ const PALETTES = [
       }
 
       .core {
-        grid-template-columns: 1fr;
+        .palettes {
+          grid-template-columns: 1fr;
+        }
       }
     }
   }

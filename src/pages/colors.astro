@@ -430,12 +430,18 @@ const hasColor = hue && saturation && lightness;
 
     @media (max-width: 769px) {
       & > .head {
+        align-items: flex-start !important;
+
         [ui-slot="button"] {
           width: var(--button-size);
 
           & > span {
             display: none;
           }
+        }
+
+        .title {
+          flex-direction: column;
         }
       }
 
