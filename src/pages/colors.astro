@@ -215,13 +215,13 @@ const GUIDES = [
   },
 ];
 
-const hue = Astro.url.searchParams.get("h");
-const saturation = Astro.url.searchParams.get("s");
 const lightness = Astro.url.searchParams.get("l");
+const chroma = Astro.url.searchParams.get("c");
+const hue = Astro.url.searchParams.get("h");
 const harmony = Astro.url.searchParams.get("harmony");
 const name = Astro.url.searchParams.get("name");
 
-const hasColor = hue && saturation && lightness;
+const hasColor = lightness && chroma && hue;
 ---
 
 <BaseLayout
@@ -258,7 +258,7 @@ const hasColor = hue && saturation && lightness;
       data-theme="light"
       data-harmony={harmony}
       style={hasColor &&
-        `--base-hue: ${hue}; --base-saturation: ${saturation}%; --base-lightness: ${lightness}%;`}>
+        `--base-lightness: ${lightness}; --base-chroma: ${chroma}; --base-hue: ${hue};`}>
       <div class="helper">
         <div class="head">
           <h3 class="title">General Concepts</h3>
@@ -312,16 +312,17 @@ const hasColor = hue && saturation && lightness;
 
 <script>
   import Color from "@/utils/color";
-  import { extractRGB } from "@/utils/helpers";
+  import { extractLch } from "@/utils/helpers";
 
   const tokens = document.querySelectorAll<HTMLButtonElement>("[data-token]");
 
   tokens.forEach((token) =>
     token.addEventListener("click", async () => {
       const label = token.querySelector("span");
+      const color = getComputedStyle(token).backgroundColor;
+      const { l, c, h } = extractLch(color);
 
-      const { r, g, b } = extractRGB(getComputedStyle(token).backgroundColor);
-      await navigator.clipboard.writeText(new Color(r, g, b).toHsl());
+      await navigator.clipboard.writeText(new Color(l, c, h).toOklch());
 
       if (!label) return;
 

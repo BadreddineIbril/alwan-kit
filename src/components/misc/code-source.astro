@@ -1,13 +1,13 @@
 ---
 import { FORMATS } from "@/utils/constants";
 
-const hue = Astro.url.searchParams.get("h");
-const saturation = Astro.url.searchParams.get("s");
 const lightness = Astro.url.searchParams.get("l");
+const chroma = Astro.url.searchParams.get("c");
+const hue = Astro.url.searchParams.get("h");
 const harmony = Astro.url.searchParams.get("harmony");
 const format = Astro.url.searchParams.get("format") || "css";
 
-const hasColor = hue && saturation && lightness;
+const hasColor = lightness && chroma && hue;
 ---
 
 <div ui-misc="component-source">
@@ -46,7 +46,7 @@ const hasColor = hue && saturation && lightness;
     data-theme="light"
     data-harmony={harmony}
     style={hasColor &&
-      `--base-hue: ${hue}; --base-saturation: ${saturation}%; --base-lightness: ${lightness}%;`}>
+      `--base-lightness: ${lightness}; --base-chroma: ${chroma}; --base-hue: ${hue};`}>
     <pre data-code></pre>
   </div>
 </div>
@@ -171,7 +171,7 @@ const hasColor = hue && saturation && lightness;
         max-height: 60vh;
         overflow: auto;
         padding: var(--spacing-16);
-        color: var(--color-warning);
+        color: var(--color-secondary);
         background-color: var(--color-surface-container-lowest) !important;
 
         [data-highlight="key"] {

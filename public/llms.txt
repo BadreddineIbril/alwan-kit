@@ -40,7 +40,7 @@ AlwanKit generates the following color roles:
 ## Technical Details
 
 - Built entirely on CSS custom properties and the cascade, zero JavaScript
-- Uses `hsl()` color model with clamped lightness and saturation for accessible output
+- Uses `oklch()` color model with clamped lightness and chroma for accessible output
 - Dark mode handled via `[data-theme="dark"]` attribute on the root element
 - Harmony offsets applied via `[data-harmony]` attribute
 - Source code is self-contained and can be self-hosted

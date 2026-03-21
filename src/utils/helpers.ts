@@ -1,7 +1,6 @@
-function extractRGB(rgb: string) {
-  let [r, g, b] = rgb.match(/\d+/g).map(Number);
-
-  return { r, g, b };
+function extractLch(lch: string) {
+  const [l, c, h] = lch.match(/[\d.]+/g) || [];
+  return { l: +l, c: (+c), h: +h };
 }
 
 function download(filename: string, content: string) {
@@ -19,4 +18,4 @@ function download(filename: string, content: string) {
   URL.revokeObjectURL(url);
 }
 
-export { extractRGB, download };
+export { extractLch, download };
