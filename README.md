@@ -25,13 +25,13 @@ Everything runs on three CSS custom properties set at the `:root` level:
 
 ```css
 :root {
+  --base-lightness: 0.55;
+  --base-chroma: 0.18;
   --base-hue: 200;
-  --base-saturation: 80%;
-  --base-lightness: 50%;
 }
 ```
 
-From these, the entire palette is derived using `hsl()` and `calc()`, no JavaScript touches the colors at any point.
+From these, the entire palette is derived using `oklch()` and `calc()`, no JavaScript touches the colors at any point.
 
 **Harmony** is handled via a `[data-harmony]` attribute on the root element. Each mode applies hue offsets to the secondary and tertiary colors:
 
@@ -42,15 +42,15 @@ From these, the entire palette is derived using `hsl()` and `calc()`, no JavaScr
 }
 ```
 
-**Dark mode** is a `[data-theme="dark"]` attribute swap, the same custom properties are redefined with adjusted lightness and saturation values, so the entire theme flips with a single attribute change.
+**Dark mode** is a `[data-theme="dark"]` attribute swap, the same custom properties are redefined with adjusted lightness and chroma values, so the entire theme flips with a single attribute change.
 
 **Accessibility** is enforced through `clamp()`, lightness values are clamped within a safe range so contrast ratios never fall below WCAG minimums, regardless of what base color is picked.
 
 ```css
 --primary-l-max: clamp(
-  20%,
-  calc(var(--base-lightness) - var(--primary-s) * 0.2),
-  50%
+  0.25,
+  calc(var(--base-lightness) - var(--primary-c) * 0.5),
+  0.55
 );
 ```
 

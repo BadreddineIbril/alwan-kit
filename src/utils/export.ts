@@ -1,20 +1,20 @@
 import { COLORS } from "./constants";
 import Color from "./color";
-import { extractRGB } from "./helpers";
+import { extractLch } from "./helpers";
 
 function getColors(theme: "light" | "dark" = "light") {
   const element = document.createElement("div");
-  if (theme === "dark") element.dataset.theme = "dark";
+  element.dataset.theme = theme;
 
   const formats = document.querySelectorAll<HTMLInputElement>(
     '[name="color-format"]',
   );
-  let format = localStorage.getItem("color-format") ?? "hsl";
+  let format = localStorage.getItem("color-format") ?? "oklch";
 
   formats.forEach((f) => {
     f.checked = f.value === format;
     f.onchange = (e) => {
-      format = (e.target as HTMLInputElement)?.value ?? "hsl";
+      format = (e.target as HTMLInputElement)?.value ?? "oklch";
       localStorage.setItem("color-format", format);
     };
   });
@@ -27,8 +27,8 @@ function getColors(theme: "light" | "dark" = "light") {
   const colors = Object.fromEntries(
     COLORS.map((name) => {
       element.style.color = `var(--color-${name})`;
-      const { r, g, b } = extractRGB(styles.color);
-      const color = new Color(r, g, b);
+      const { l, c, h } = extractLch(styles.color);
+      const color = new Color(l, c, h);
 
       return [
         name,
@@ -58,7 +58,7 @@ const highlight = (code: string) =>
       `<span data-highlight='character'>$1</span>`,
     )
     .replace(/"(.*?)"/g, `"<span data-highlight='key'>$1</span>"`)
-    .replace(/(hsl\(.*?\))/g, `<span data-highlight='value'>$1</span>`);
+    .replace(/(oklch\(.*?\))/g, `<span data-highlight='value'>$1</span>`);
 
 function exportRawColors() {
   const light = getColors("light");
@@ -89,7 +89,7 @@ ${mapToBlock(dark, (k, v) => `  "${k}": ${v},`)}
       colors: {
   ${mapToBlock(
     light,
-    (k) => `      "${k}": "hsl(var(--color-${k}) / &lt;alpha-value&gt;)",`,
+    (k) => `      "${k}": "oklch(var(--color-${k}) / &lt;alpha-value&gt;)",`,
   )}
       }
     }

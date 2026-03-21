@@ -2,6 +2,7 @@
 import { defineConfig, fontProviders } from "astro/config";
 import netlify from "@astrojs/netlify";
 import partytown from "@astrojs/partytown";
+import mdx from "@astrojs/mdx";
 
 export default defineConfig({
   output: "server",
@@ -19,6 +20,7 @@ export default defineConfig({
 
   adapter: netlify(),
   integrations: [
+    mdx(),
     partytown({
       config: {
         forward: ["dataLayer.push"],

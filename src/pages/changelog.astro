@@ -1,0 +1,108 @@
+---
+import BaseLayout from "@/components/layouts/base-layout.astro";
+import May_21_2026 from "@/pages/changelog/21-03-2026.mdx";
+---
+
+<BaseLayout title="Changelog" description="Latest updates and announcements.">
+  <main ui-page="changelog">
+    <div class="head">
+      <a
+        href="/"
+        ui-slot="button"
+        data-variant="neutral"
+        data-mode="lighter"
+        data-size="md">
+        <i class="hgi hgi-stroke hgi-arrow-left-02"></i>
+        <span>Back to home</span>
+      </a>
+      <h3 class="title">Changelog</h3>
+      <span></span>
+    </div>
+    <div class="core">
+      <article class="log">
+        <time datetime="21-02-2026" class="date">21 May, 2026</time>
+        <aside class="content">
+          <May_21_2026 />
+        </aside>
+      </article>
+      <hr ui-slot="separator" data-variant="line" />
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  [ui-page="changelog"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-48);
+
+    .head {
+      display: grid;
+      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+
+      .title {
+        font: var(--font-headline-lg);
+        text-align: center;
+      }
+    }
+
+    .core {
+      display: grid;
+      gap: var(--spacing-32);
+
+      .log {
+        display: grid;
+        gap: var(--spacing-24);
+        grid-template-columns: 200px auto;
+
+        .date {
+          color: var(--color-on-surface-variant);
+        }
+
+        .content {
+          display: flex;
+          flex-direction: column;
+          gap: var(--spacing-24);
+
+          [ui-slot="link-button"] {
+            display: inline;
+          }
+
+          ul {
+            list-style: disc;
+            display: grid;
+            gap: var(--spacing-8);
+            margin-inline-start: var(--spacing-24);
+          }
+        }
+      }
+    }
+
+    @media (max-width: 769px) {
+      .head {
+        .title {
+          display: contents;
+        }
+
+        [ui-slot="button"] {
+          width: var(--button-size);
+
+          & > span {
+            display: none;
+          }
+        }
+      }
+
+      .core {
+        .log {
+          grid-template-columns: 1fr;
+
+          .date {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+</style>
