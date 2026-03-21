@@ -1,0 +1,13 @@
+## Migration from HSL to OKLCH
+
+After launch, some feedback suggested using <a ui-slot="link-button" data-underline href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch" target="_blank">OKLCH</a> instead of <a ui-slot="link-button" data-underline href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/hsl" target="_blank">HSL</a> for the core. I gave it a try, and yeah it made sense, so I switched the logic to oklch().
+
+### Why?
+
+When I try to make a color lighter or darker, I usually mess with the lightness. The problem is, it doesn't always turn out good, sometimes it looks faded, other times way too bright, and the palette ends up feeling off. This is just a quick explanation though. You can check out this <a ui-slot="link-button" data-underline href="https://medium.com/@alekswebnet/defining-colors-in-modern-css-why-its-time-to-switch-to-oklch-c6b972d98520" target="_blank">article</a> (shared with me on Reddit) it breaks everything down with examples.
+
+### What's new in this release:
+
+- Switched palette logic from saturation to chroma
+- Made semantic roles dynamic (no more hardcoding)
+- Cleaned up CSS core logic and added helpful comments

@@ -4,7 +4,7 @@ import { extractLch } from "./helpers";
 
 function getColors(theme: "light" | "dark" = "light") {
   const element = document.createElement("div");
-  if (theme === "dark") element.dataset.theme = "dark";
+  element.dataset.theme = theme;
 
   const formats = document.querySelectorAll<HTMLInputElement>(
     '[name="color-format"]',

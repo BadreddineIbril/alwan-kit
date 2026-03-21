@@ -2,7 +2,7 @@
   "name": "AlwanKit",
   "description": "AlwanKit is a free, open source color system generator built entirely on CSS custom properties.",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "badreddine ibril",
     "url": "https://x.com/badr_ibril"
@@ -27,6 +27,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^5.0.2",
     "@astrojs/netlify": "^6.6.4",
     "@astrojs/partytown": "^2.1.4",
     "astro": "^5.17.1"
