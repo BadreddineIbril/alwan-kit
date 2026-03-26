@@ -29,6 +29,7 @@ AlwanKit generates the following color roles:
 - **Examples**: UI components and blocks built using the generated palette (buttons, forms, cards, alerts, and more)
 - **Explore**: A curated collection of ready-to-use palettes from popular brands
 - **Export**: Code output with format switcher (CSS, SCSS, Tailwind, JSON) and copy/download actions
+- **Changelog**: Latest updates and announcements
 
 ## How It Works
 
