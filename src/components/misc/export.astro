@@ -5,22 +5,22 @@ const EXPORTS = [
   {
     format: "css",
     label: "variables.css",
-    code: ":root {\n --primary: hsl(200 75% 35%);\n --on-primary: hsl(0 0% 100%);\n --primary-container: hsl(200 65% 90%);\n --on-primary-container: hsl(200 76% 10%);",
+    code: ":root {\n --primary: oklch(0.55 0.112 238);\n --on-primary: oklch(1 0 0);\n --primary-container: oklch(0.93 0.062 238);\n --on-primary-container: oklch(0.18 0.112 238);",
   },
   {
     format: "scss",
     label: "colors.scss",
-    code: '$colors-light: (\n "primary": hsl(200 75% 35%),\n "on-primary": hsl(0 0% 100%),\n "primary-container": hsl(200 65% 90%),\n "on-primary-container": hsl(200 76% 10%),',
+    code: '$colors-light: (\n "primary": oklch(0.55 0.112 238),\n "on-primary": oklch(1 0 0),\n "primary-container": oklch(0.93 0.062 238),\n "on-primary-container": oklch(0.18 0.112 238),',
   },
   {
     format: "json",
     label: "tokens.json",
-    code: '{\n "light": {\n "primary": "hsl(200 75% 35%)",\n "on-primary": "hsl(0 0% 100%)",\n "primary-container": "hsl(200 65% 90%)",\n "on-primary-container": "hsl(200 76% 10%)"',
+    code: '{\n "light": {\n "primary": "oklch(0.55 0.112 238)",\n "on-primary": "oklch(1 0 0)",\n "primary-container": "oklch(0.93 0.062 238)",\n "on-primary-container": "oklch(0.18 0.112 238)"',
   },
   {
     format: "tailwind",
     label: "tailwind.config",
-    code: `darkMode: ["class", '[data-theme="dark"]'],\n theme: {\n  extend: {\n   colors: {\n    "primary": "hsl(200 75% 35%)",\n    "on-primary": "hsl(0 0% 100%)",`,
+    code: `darkMode: ["class", '[data-theme="dark"]'],\n theme: {\n  extend: {\n   colors: {\n    "primary": "oklch(0.55 0.112 238)",\n    "on-primary": "oklch(1 0 0)",`,
   },
 ];
 ---
